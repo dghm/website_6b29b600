@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鴻築室內裝修設計網站建置專案提案 · 萬能數維</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* 鴻築 Logo 色系 */
+    --fp-navy:         #1b203e;  /* 背景深藍 */
+    --fp-blue:         #3f68a8;  /* F 字主藍 */
+    --fp-silver:       #c0d1e5;  /* 建築線條亮部 */
+    --fp-blue-muted:   #6787b3;  /* 建築線條暗部 */
+    --primary:         var(--fp-navy);
+    --primary-mid:     #252d52;
+    --primary-light:   var(--fp-blue);
+    --accent:          var(--fp-blue);
+    --accent-light:    var(--fp-silver);
+    --accent-muted:    var(--fp-blue-muted);
+    --bg-light:        #eef2f7;
+    --white:           #ffffff;
+    --mid:             #3d4558;
+    --muted:           #7a8499;
+    --vendor:          #2a3558;
+    --slide-bg-image:  url('assets/slide-bg-sketch.png');
+    --slide-bg-opacity: 0.08;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans TC', sans-serif; background: #111; padding: 48px 0 80px; }
+
+  .deck-note {
+    width: 960px; margin: 0 auto 32px; padding: 16px 20px;
+    background: #1a1a1a; border-left: 3px solid var(--accent);
+    font-size: 11px; color: #aaa; line-height: 1.85; letter-spacing: 0.04em;
+  }
+  .deck-note strong { color: var(--accent-light); font-weight: 500; }
+
+  .script-note {
+    width: 960px;
+    margin: -6px auto 14px;
+    padding: 12px 18px;
+    background: #1c1c1c;
+    border-left: 2px solid #555;
+    font-size: 10px;
+    font-weight: 300;
+    color: #999;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+  }
+  .script-note strong {
+    color: #bbb;
+    font-weight: 500;
+    margin-right: 6px;
+  }
+
+  .slide {
+    width: 960px; height: 540px; position: relative; overflow: hidden;
+    margin: 0 auto 48px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .label {
+    width: 960px; margin: 0 auto 10px; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.2em; color: #444; text-transform: uppercase;
+  }
+  .label span { float: right; color: #555; font-weight: 300; letter-spacing: 0.08em; text-transform: none; }
+  .slide-footer {
+    position: absolute; bottom: 14px; right: 20px; font-size: 9px;
+    letter-spacing: 0.08em; color: var(--muted);
+  }
+  .slide-footer.light { color: rgba(255,255,255,0.28); }
+  .slide-footer.left { right: auto; left: 20px; }
+
+  /* COVER */
+  .slide-cover {
+    background: var(--primary);
+    display: grid;
+    grid-template-columns: 1fr 300px;
+  }
+  .cover-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 48px 48px; position: relative;
+  }
+  .cover-left::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: var(--accent);
+  }
+  .cover-badge {
+    display: inline-block; font-size: 9px; letter-spacing: 0.14em;
+    color:var(--accent-light); background:transparent;
+    border-bottom: 1px solid var(--accent-light);
+    padding: 4px 0px; margin-bottom: 20px; font-weight: 500;
+  }
+  .cover-client-logo {
+    display: block; width: 72px; height: auto;
+    margin-bottom: 12px; border-radius: 4px;
+  }
+  .cover-client {
+    font-family: 'Noto Serif TC', serif; font-size: 13px;
+    color: rgba(255,255,255,0.45); letter-spacing: 0.14em; margin-bottom: 8px;
+  }
+  .cover-title {
+    font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 600;
+    color: var(--white); letter-spacing: 0.06em; line-height: 1.45; margin-bottom: 16px;
+  }
+  .cover-divider { width: 48px; height: 1.5px; background: var(--accent); margin-bottom: 20px; }
+  .cover-meta { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.42); line-height: 2; letter-spacing: 0.06em; }
+  .cover-meta strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+  .cover-right {
+    background: var(--primary-mid); position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 32px;
+  }
+  .cover-right svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.9; }
+  .vendor-block {
+    position: relative; z-index: 1; text-align: center;
+    padding: 24px; border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(0,0,0,0.15); width: 100%;
+  }
+  .vendor-label { font-size: 8px; color: rgba(255,255,255,0.35); letter-spacing: 0.2em; margin-bottom: 10px; }
+  .vendor-logo {
+    display: block; width: 100%; height: auto;
+    opacity: 0.9; margin-bottom: 14px;
+  }
+  .vendor-contact { margin-top: 16px; font-size: 9px; color: rgba(255,255,255,0.4); line-height: 1.8; }
+  .vendor-contact .vc-sep { opacity: 0.5; }
+  .vendor-contact .placeholder { color: #E5622A; }
+
+  /* INNER HEADER */
+  .inner-header {
+    background: var(--primary); height: 72px;
+    display: flex; align-items: center; padding: 0 40px;
+    position: relative; flex-shrink: 0;
+  }
+  .inner-header::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: var(--accent);
+  }
+  .ih-eyebrow {
+    font-family: 'EB Garamond', serif; font-style: italic; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.3em; margin-right: 20px;
+  }
+  .ih-title {
+    font-family: 'Noto Serif TC', serif; font-size: 18px;
+    color: var(--white); letter-spacing: 0.18em;
+  }
+  .ih-num {
+    margin-left: auto; font-family: 'EB Garamond', serif;
+    font-size: 13px; color: rgba(255,255,255,0.22); letter-spacing: 0.1em;
+  }
+
+  /* 內容區底圖（約 20%） */
+  .slide-bg-watermark {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--slide-bg-image);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    opacity: var(--slide-bg-opacity);
+  }
+  .slide-body-white,
+  .slide-body-cream {
+    position: relative;
+    isolation: isolate;
+  }
+  .slide-body-white > :not(.slide-bg-watermark),
+  .slide-body-cream > :not(.slide-bg-watermark) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* GENERIC BODY */
+  .slide-body-white, .slide-body-cream {
+    flex: 1; display: flex; flex-direction: column;
+    min-height: 0;
+  }
+  .slide-body-white { background: var(--white); }
+  .slide-body-cream { background: var(--bg-light); }
+  .slide.slide-inner { display: flex; flex-direction: column; }
+  .slide-inner-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+  /* SCOPE */
+  .scope-body {
+    flex: 1; display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 0;
+  }
+  .scope-col { padding: 22px 32px 20px; display: flex; flex-direction: column; justify-content: flex-start; gap: 0; }
+  .scope-col.right { background: rgba(238, 242, 247, 0.72); border-left: 1px solid rgba(0,0,0,0.06); }
+  .scope-col h3 {
+    font-family: 'Noto Serif TC', serif; font-size: 2rem; color: var(--primary);
+    letter-spacing: 0.08em; margin-bottom: 10px; flex-shrink: 0;
+  }
+  .scope-col p { font-size: calc(2rem * 11 / 14); font-weight: 300; color: var(--mid); line-height: 1.95; margin-bottom: 14px; }
+  /* 項目卡片（Slide 2～6 共用） */
+  .item-cards {
+    display: grid; gap: 10px; align-content: center; align-items: stretch;
+  }
+  .item-cards.cols-1 { grid-template-columns: 1fr; }
+  .item-cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .item-cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .item-card {
+    background: var(--primary);
+    padding: 12px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    min-height: 0;
+    height: 100%;
+  }
+  .item-card.compact { padding: 30px 12px; gap: 3px; }
+  .item-card-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.88em;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    line-height: 1.35;
+  }
+  .item-card-spec {
+    font-size: 0.75em;
+    font-weight: 500;
+    color: var(--accent-light);
+    letter-spacing: 0.03em;
+    line-height: 1.35;
+  }
+  .item-card-note {
+    font-size: 0.7em;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.45;
+  }
+  .item-card-num {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.72em;
+    color: var(--accent-light);
+    margin-bottom: 2px;
+  }
+  .item-card[data-num] {
+    position: relative;
+    overflow: hidden;
+  }
+  .item-card[data-num]::after {
+    content: attr(data-num);
+    position: absolute;
+    right: 6px;
+    bottom: -4px;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 2.8em;
+    font-weight: 400;
+    color: var(--accent-light);
+    opacity: 0.18;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .scope-col .item-cards { flex: 0; }
+  .scope-col.right .item-card { background: var(--primary-mid); }
+  .detail-body .item-cards.cols-3 { gap: 8px; }
+  .detail-body .item-cards.cols-3 .item-card.compact { padding: 8px 10px; }
+  .detail-body .item-cards.cols-3 .item-card-title { font-size: 0.82em; }
+  .detail-body .item-cards.cols-3 .item-card-spec,
+  .detail-body .item-cards.cols-3 .item-card-note { font-size: 0.68em; }
+  .scope-exclude {
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-size: 0.6em;
+    font-weight: 300;
+    color: #ccc;
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+  }
+  .scope-exclude p { margin: 0 0 4px;font-size: .6em; color: #aaa; }
+  .scope-exclude p:last-child { margin-bottom: 0; }
+  .scope-kpi {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 8px;
+  }
+  .kpi-box {
+    background: var(--white); padding: 12px; text-align: center;
+    border-top: 2px solid var(--accent);
+  }
+  .kpi-box .k { font-family: 'EB Garamond', serif; font-size: 20px; color: var(--primary); }
+  .kpi-box .l { font-size: 9px; color: var(--muted); margin-top: 4px; letter-spacing: 0.06em; }
+
+  /* 服務項目明細 */
+  .detail-body {
+    flex: 1; min-height: 0; padding: 12px 28px 16px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .detail-lead {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.82em; color: var(--primary);
+    margin-bottom: 12px; letter-spacing: 0.06em;
+    flex-shrink: 0;
+  }
+  .detail-body .item-cards { grid-auto-rows: minmax(120px, auto); }
+  .color-chip {
+    display: inline-block; width: 0.65em; height: 0.65em;
+    border-radius: 1px; vertical-align: middle; margin: 0 2px;
+    border: 1px solid rgba(0,0,0,0.12);
+  }
+
+  /* ARCHITECTURE */
+  .arch-body { flex: 1; padding: 20px 36px 28px; display: grid; grid-template-columns: 280px 1fr; gap: 28px; align-items: center; }
+  .sitemap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .sitemap-root {
+    background: var(--primary); color: var(--white); padding: 10px 24px;
+    font-family: 'Noto Serif TC', serif; font-size: 12px; letter-spacing: 0.1em;
+    width: 100%; text-align: center;
+  }
+  .sitemap-line { width: 1px; height: 12px; background: var(--accent); }
+  .sitemap-branches {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%;
+  }
+  .sitemap-branches .full { grid-column: span 2; }
+  .sitemap-node {
+    background: var(--white); border: 1px solid rgba(27,32,62,0.15);
+    padding: 8px 6px; text-align: center; font-size: 10px; color: var(--primary);
+    letter-spacing: 0.04em; line-height: 1.4;
+  }
+  .sitemap-node span { display: block; font-size: 8px; color: var(--muted); margin-top: 2px; }
+  .arch-detail h4 {
+    font-family: 'Noto Serif TC', serif; font-size: 13px; color: var(--primary);
+    margin-bottom: 12px; letter-spacing: 0.06em;
+  }
+  .arch-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+  .arch-table th {
+    background: var(--primary); color: var(--white); font-weight: 500;
+    padding: 8px 10px; text-align: left; letter-spacing: 0.06em;
+  }
+  .arch-table td {
+    padding: 8px 10px; border-bottom: 1px solid rgba(0,0,0,0.06);
+    color: var(--mid); vertical-align: top; line-height: 1.55;
+  }
+  .arch-table tr:nth-child(even) td { background: var(--bg-light); }
+  .arch-table .file { font-family: monospace; font-size: 9px; color: var(--primary-light); }
+
+  /* TECH + DELIVERABLES */
+  .tech-body {
+    flex: 1; display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; padding: 24px 32px; align-content: center;
+  }
+  .tech-card {
+    background: var(--white); padding: 22px 20px; min-height: 300px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06); position: relative;
+  }
+  .tech-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent);
+  }
+  .tech-card h4 {
+    font-family: 'Noto Serif TC', serif; font-size: 13px; color: var(--primary);
+    margin-bottom: 14px; letter-spacing: 0.06em;
+  }
+  .tech-card ul { list-style: none; }
+  .tech-card li {
+    font-size: 10px; color: var(--mid); line-height: 1.75; padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .tech-card li:last-child { border-bottom: none; }
+
+  /* PROCESS */
+  .process-body {
+    flex: 1; padding: 24px 36px 32px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    position: relative;
+  }
+  .process-steps::before {
+    content: ''; position: absolute; top: 28px; left: 8%; right: 8%;
+    height: 2px; background: linear-gradient(90deg, var(--accent), var(--primary-light));
+    opacity: 0.3; z-index: 0;
+  }
+  .p-step { position: relative; z-index: 1; text-align: center; }
+  .p-num {
+    width: 56px; height: 56px; margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: transparent; border: none; padding: 0;
+  }
+  .p-num .p-icon {
+    width: 56px; height: 56px; object-fit: contain; display: block;
+  }
+  .p-title {
+    font-family: 'Noto Serif TC', serif; font-size: 11px;
+    color: var(--primary); letter-spacing: 0.05em; margin-bottom: 8px;
+  }
+  .p-desc { font-size: 9px; color: var(--muted); line-height: 1.6; padding: 0 4px; }
+  .process-note {
+    margin-top: 22px; padding: 12px 16px; 
+    border-left: 3px solid var(--accent); font-size: 10px; color: var(--mid); line-height: 1.7;
+  }
+
+  /* TIMELINE */
+  .timeline-body { flex: 1; padding: 20px 32px 28px; }
+  .timeline-summary {
+    display: flex; gap: 12px; margin-bottom: 18px;
+  }
+  .tl-card {
+    flex: 1; background: var(--white); padding: 10px 14px;
+    border-left: 3px solid var(--accent);
+  }
+  .tl-card .v { font-family: 'EB Garamond', serif; font-size: 18px; color: var(--primary); }
+  .tl-card .l { font-size: 9px; color: var(--muted); margin-top: 2px; }
+  .gantt { width: 100%; }
+  .gantt-head {
+    display: grid; grid-template-columns: 132px repeat(10, 1fr);
+    font-size: 8px; color: var(--muted); text-align: center; margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+  .gantt-row {
+    display: grid; grid-template-columns: 132px repeat(10, 1fr);
+    align-items: center; margin-bottom: 10px; min-height: 26px; gap: 2px;
+  }
+  .gantt-label {
+    font-size: 10px; color: var(--primary); padding-right: 10px; line-height: 1.35;
+  }
+  .gantt-cell {
+    height: 22px; background: rgba(27,32,62,0.04);
+    position: relative; border-radius: 1px;
+  }
+  .gantt-cell.on { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+  .gantt-cell.on-accent { background: linear-gradient(90deg, var(--accent), var(--accent-muted)); }
+  .gantt-cell.go { background: var(--accent); box-shadow: 0 0 0 2px var(--white), 0 0 0 3px var(--accent); }
+  .timeline-foot {
+    margin-top: 12px; font-size: 9px; color: var(--muted); text-align: right; letter-spacing: 0.04em;
+  }
+
+  /* PRICING - 方案二簡潔版 */
+  .quote-simple-body {
+    display: grid !important;
+    grid-template-columns: 1fr 280px;
+    grid-template-rows: 1fr;
+    flex: 1;
+    overflow: hidden;
+  }
+  .quote-simple-body .slide-bg-watermark {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    z-index: 0;
+  }
+  /* 左欄：條列 + 總價底部 */
+  .qs-items {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 1;
+    padding: 28px 40px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid rgba(27,32,62,0.08);
+  }
+  .qs-item {
+    display: flex; align-items: baseline; gap: 10px;
+    font-size: 11px; color: var(--mid); font-weight: 300;
+    letter-spacing: 0.04em;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(27,32,62,0.07);
+  }
+  .qs-item:first-child { border-top: 1px solid rgba(27,32,62,0.07); }
+  .qs-item-dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0; margin-top: 4px;
+    opacity: 0.5;
+  }
+  .qs-item-sub {
+    font-size: 9px; color: var(--muted); font-weight: 300;
+    letter-spacing: 0.03em; margin-left: 2px;
+  }
+  /* 總價（左欄底部） */
+  .qs-total-block {
+    margin-top: 20px; padding-top: 16px;
+    border-top: 1px solid rgba(27,32,62,0.12);
+    align-self: flex-end;
+    width: 100%;
+    text-align: right;
+  }
+  .qs-label {
+    font-size: 8px; letter-spacing: 0.18em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .qs-amount {
+    font-family: 'EB Garamond', serif; font-size: 28px;
+    color: var(--primary); letter-spacing: 0.04em; line-height: 1;
+  }
+  .qs-footnote {
+    margin-top: 8px; font-size: 8.5px; color: var(--muted);
+    letter-spacing: 0.03em; line-height: 1.7;
+  }
+  /* 右欄：付款三卡片 */
+  .qs-right-col {
+    grid-column: 2;
+    grid-row: 1;
+    z-index: 1;
+    background: var(--primary);
+    display: flex; flex-direction: column;
+  }
+  .qs-phases {
+    display: flex; flex-direction: column; flex: 1;
+  }
+  .qs-phase {
+    flex: 1; padding: 0 24px;
+    display: flex; flex-direction: row; align-items: center; gap: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .qs-phase:last-child { border-bottom: none; }
+  /* .qs-phase::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--accent-light);
+  } */
+  .qs-phase:nth-child(1)::before { opacity: 0.3; }
+  .qs-phase:nth-child(2)::before { opacity: 0.65; }
+  .qs-phase:nth-child(3)::before { opacity: 1; }
+  .qs-phase-pct {
+    font-family: 'EB Garamond', serif; font-size: 26px;
+    color: var(--accent-light); line-height: 1; min-width: 52px;
+  }
+  .qs-phase-info { display: flex; flex-direction: column; gap: 4px; }
+  .qs-phase-name {
+    font-family: 'Noto Serif TC', serif; font-size: 11px;
+    color: var(--white); letter-spacing: 0.08em;
+  }
+  .qs-phase-amt {
+    font-size: 9px; color: var(--accent-light); letter-spacing: 0.03em; opacity: 0.75;
+  }
+  .qs-phase-note {
+    margin-left: auto; font-size: 8px; color: rgba(255,255,255,0.32);
+    line-height: 1.75; text-align: right;
+  }
+  .qs-arrow { display: none; }
+  .qs-sub { display: none; }
+
+  /* PRICING - 舊版（保留，目前未使用）*/
+  .pricing-body { flex: 1; padding: 18px 36px 24px; display: grid; grid-template-columns: 1fr 220px; gap: 20px; }
+  .price-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+  .price-table th {
+    background: var(--primary); color: var(--white); padding: 9px 12px;
+    text-align: left; font-weight: 500; letter-spacing: 0.05em;
+  }
+  .price-table th:last-child { text-align: right; width: 100px; }
+  .price-table td {
+    padding: 9px 12px; border-bottom: 1px solid rgba(0,0,0,0.07);
+    color: var(--mid); vertical-align: top; line-height: 1.5;
+  }
+  .price-table td:last-child {
+    text-align: right; font-family: 'EB Garamond', serif;
+    font-size: 13px; color: var(--primary); white-space: nowrap;
+  }
+  .price-table tr.subtotal td { background: var(--bg-light); font-weight: 500; color: var(--primary); }
+  .price-table tr.total td {
+    background: var(--primary); color: var(--white); font-size: 11px;
+    font-family: 'Noto Sans TC', sans-serif; font-weight: 500;
+  }
+  .price-table tr.total td:last-child {
+    color: var(--accent-light); font-family: 'EB Garamond', serif; font-size: 18px;
+  }
+  .price-note { font-size: 8px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+  .price-side {
+    background: var(--primary); padding: 20px 18px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .price-side h4 {
+    font-family: 'Noto Serif TC', serif; font-size: 13px;
+    color: var(--white); letter-spacing: 0.08em; margin-bottom: 14px;
+  }
+  .price-side ul { list-style: none; }
+  .price-side li {
+    font-size: 9px; color: rgba(255,255,255,0.55); line-height: 1.7;
+    padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .price-side .pay {
+    margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .price-side .pay-title { font-size: 9px; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 8px; }
+  .price-side .pay-item { font-size: 9px; color: rgba(255,255,255,0.5); line-height: 1.65; }
+
+  /* CLOSING */
+  .slide-closing {
+    background: var(--primary);
+    display: grid; grid-template-columns: 1fr 260px;
+  }
+  .cl-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 44px 48px; position: relative;
+  }
+  .cl-left::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; background: var(--accent);
+  }
+  .cl-eyebrow {
+    font-family: 'EB Garamond', serif; font-style: italic; font-size: 12px;
+    color: var(--accent); letter-spacing: 0.25em; margin-bottom: 10px;
+  }
+  .cl-title {
+    font-family: 'Noto Serif TC', serif; font-size: 22px;
+    color: var(--white); letter-spacing: 0.1em; line-height: 1.55; margin-bottom: 24px;
+  }
+  .next-steps-label { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
+  .next-steps { display: flex; flex-direction: column; gap: 12px; }
+  .next-step { display: flex; gap: 14px; align-items: flex-start; }
+  .ns-num {
+    font-family: 'EB Garamond', serif; font-size: 18px; color: var(--accent); min-width: 24px;
+  }
+  .ns-text { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.72); line-height: 1.7; }
+  .ns-text strong { color: var(--white); font-weight: 500; }
+  .cl-right {
+    background: var(--primary-mid); padding: 28px 24px;
+    display: flex; flex-direction: column; justify-content: center; gap: 16px;
+    border-left: 1px solid rgba(255,255,255,0.05);
+  }
+  .cl-vendor-logo {
+    display: block; width: 180px; max-width: 100%; height: auto;
+  }
+  .cl-row { display: flex; gap: 10px; margin-bottom: 6px; align-items: baseline; }
+  .cl-key { font-size: 8px; color: var(--accent); letter-spacing: 0.1em; min-width: 36px; }
+  .cl-val { font-size: 9px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .placeholder { color: #E5622A; font-style: normal; }
+
+  /* ---------------------------------------------------------- */
+  /* PRESENTATION MODE                                          */
+  /* ---------------------------------------------------------- */
+  .item-card-detail { display: none; }
+
+  /* 控制列（兩種模式都顯示） */
+  .pres-controls {
+    position: fixed; top: 12px; right: 16px; z-index: 1000;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+  .pres-controls button {
+    background: rgba(255,255,255,0.08); color: #ddd;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 14px; font-size: 12px; letter-spacing: 0.08em;
+    cursor: pointer; font-family: inherit;
+    transition: background 0.2s;
+  }
+  .pres-controls button:hover { background: rgba(255,255,255,0.18); color: #fff; }
+  .pres-counter {
+    font-family: 'EB Garamond', serif; font-size: 13px;
+    color: rgba(255,255,255,0.55); letter-spacing: 0.1em;
+    min-width: 52px; text-align: center;
+  }
+  body.presentation-mode .pres-controls { opacity: 0.35; transition: opacity 0.2s; }
+  body.presentation-mode .pres-controls:hover { opacity: 1; }
+  body.presentation-mode .pres-controls:hover ~ .pres-hint { opacity: 1 !important; }
+
+  /* 提示列 */
+  .pres-hint {
+    position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+    z-index: 1000; font-size: 11px; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.12em; font-family: 'Noto Sans TC', sans-serif;
+    pointer-events: none; transition: opacity 0.4s;
+  }
+  body:not(.presentation-mode) .pres-hint { display: none; }
+
+  /* 簡報模式 body */
+  body.presentation-mode {
+    background: #000;
+    padding: 0;
+    overflow: hidden;
+    width: 100vw; height: 100vh;
+  }
+  body.presentation-mode .deck-note,
+  body.presentation-mode .label,
+  body.presentation-mode .script-note { display: none !important; }
+
+  /* 簡報模式 slide：fixed 置中，依 viewport 縮放 */
+  body.presentation-mode .slide {
+    position: fixed;
+    top: 50%; left: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%) scale(var(--slide-scale, 1));
+    transform-origin: center center;
+    box-shadow: 0 0 60px rgba(0,0,0,0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  body.presentation-mode .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 5;
+  }
+
+  /* expandable 卡片：hover 微浮 */
+  body.presentation-mode .item-card.expandable {
+    cursor: pointer;
+    transition: opacity 0.28s ease, transform 0.28s ease,
+                box-shadow 0.28s ease, background 0.28s ease;
+  }
+  body.presentation-mode .item-card.expandable:hover:not(.expanded) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  }
+  body.presentation-mode .item-cards.has-expanded .item-card:not(.expanded) {
+    opacity: 0.12;
+    pointer-events: none;
+    transform: scale(0.96);
+  }
+
+  /* expanded：從 slide 中心淡入彈出 */
+  body.presentation-mode .item-card.expanded {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    width: 600px;
+    max-width: 78vw;
+    z-index: 200;
+    padding: 26px 32px;
+    background: var(--white);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    cursor: pointer;
+    gap: 8px;
+    height: auto;
+    justify-content: flex-start;
+    animation: cardPopIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes cardPopIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.88); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  /* expanded 遮罩 */
+  body.presentation-mode .card-overlay {
+    position: fixed; inset: 0; z-index: 99;
+    background: rgba(0,0,0,0.45);
+    animation: overlayIn 0.2s ease both;
+  }
+  @keyframes overlayIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  body.presentation-mode .item-card.expanded .item-card-spec  { color: var(--accent); }
+  body.presentation-mode .item-card.expanded .item-card-note  { color: var(--muted); }
+  body.presentation-mode .item-card.expanded .item-card-num   { color: var(--accent); }
+  body.presentation-mode .item-card.expanded::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--accent);
+  }
+  body.presentation-mode .item-card.expanded .item-card-title {
+    font-size: 26px;
+    line-height: 1.3;
+    color: var(--primary);
+  }
+  body.presentation-mode .item-card.expanded .item-card-spec {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  body.presentation-mode .item-card.expanded .item-card-note {
+    font-size: 13px;
+  }
+  body.presentation-mode .item-card.expanded .item-card-num {
+    font-size: 14px;
+  }
+  body.presentation-mode .item-card.expanded .item-card-detail {
+    display: block;
+    margin-top: 12px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.9;
+    letter-spacing: 0.02em;
+  }
+  body.presentation-mode .item-card.expanded .item-card-detail .dt-row + .dt-row {
+    margin-top: 6px;
+  }
+  body.presentation-mode .item-card.expanded .item-card-detail strong {
+    color: var(--primary); font-weight: 500;
+  }
+
+  /* 動畫減量偏好 */
+  @media (prefers-reduced-motion: reduce) {
+    body.presentation-mode .slide,
+    body.presentation-mode .item-card.expandable,
+    body.presentation-mode .item-card.expanded,
+    body.presentation-mode .card-overlay,
+    .pres-hint, .pres-controls {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  /* 列印（閱讀模式匯出 PDF）：隱藏簡報控制元件 */
+  @media print {
+    .pres-controls, .pres-hint, .card-overlay { display: none !important; }
+    body { background: #fff !important; }
+    body.presentation-mode .slide { position: relative !important; transform: none !important; opacity: 1 !important; }
+  }
+</style>
+</head>
+<body class="presentation-mode">
+
+  <div class="pres-controls" role="toolbar" aria-label="簡報控制列">
+    <span class="pres-counter" id="presCounter" aria-live="polite">1 / 11</span>
+    <button id="prevBtn" type="button" title="上一頁（←）" aria-label="上一頁">‹</button>
+    <button id="nextBtn" type="button" title="下一頁（滑鼠左鍵 / →）" aria-label="下一頁">›</button>
+    <button id="modeToggle" type="button" title="切換閱讀／簡報模式（R）" aria-pressed="true" aria-label="切換閱讀／簡報模式">閱讀模式</button>
+  </div>
+  <div class="pres-hint">左鍵 / →：下一頁　·　←：上一頁　·　卡片可點擊　·　ESC 收合　·　R 切模式</div>
+
+  <div class="deck-note">
+    <strong>提案版 v2 · 萬能數維 → 鴻築</strong><br>
+    投影片只放重點；各頁下方灰色「講稿」供口頭補充，匯出 PDF 時可不選該區塊。<br>
+    <span class="placeholder">---</span> 標示處請依實際報價與聯絡人更新。
+  </div>
+
+  <!-- SLIDE 1 -->
+  <p class="label">Slide 1 · 封面</p>
+  <div class="script-note"><strong>講稿：</strong>自我介紹萬能數維，說明今日提案涵蓋範圍、架構、執行期程與報價，約 20 分鐘，結束後歡迎提問。</div>
+  <div class="slide slide-cover">
+    <div class="cover-left">
+      <span class="cover-badge">PROJECT PROPOSAL</span>
+      <img src="assets/fp-logo.png" class="cover-client-logo" alt="FP Decoration Logo">
+      <div class="cover-client">鴻築室內裝修有限公司</div>
+      <div class="cover-title">官方形象網站<br>建置專案</div>
+      <div class="cover-divider"></div>
+      <div class="cover-meta">
+        <strong>日期</strong>　2026 / 05 / 21<br>
+        <strong>性質</strong>　機密 · 內部評估
+      </div>
+    </div>
+    <div class="cover-right">
+      <div class="vendor-block">
+        <div class="vendor-label">PROPOSED BY</div>
+        <img src="assets/dghm-logo.png" class="vendor-logo" alt="萬能數維有限公司">
+        <div class="vendor-contact">dghm.tw<span class="vc-sep"> ❘ </span>help@dghm.tw<span class="vc-sep"> ❘ </span><span class="placeholder">0937-805-149</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer light left">萬能數維有限公司 x 機密文件</div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <p class="label">Slide 2 · 專案目標與範圍 <span>約 3 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>鴻築承接的工程規模與口碑，值得一個更強的數位門面。這次重構的核心目的有三：第一，讓潛在業主在聯絡前就能充分評估你們的能力，提高洽詢品質與成交率；第二，透過場域分類展示工程實績，一眼看出商場、酒店、辦公、公設各類承接實力；第三，從 Logo 色系延伸出一致的品牌視覺，同時支援手機瀏覽、保留現有網域，降低切換成本。範圍分四大項，共 10 頁，接下來逐頁說明。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Project Scope</span>
+      <span class="ih-title">專　案　目　標　與　範　圍</span>
+      <span class="ih-num">No.01</span>
+    </div>
+    <div class="scope-body slide-body-white">
+      <div class="slide-bg-watermark" aria-hidden="true"></div>
+      <div class="scope-col">
+        <h3>目標</h3>
+        <div class="item-cards cols-1">
+          <div class="item-card compact">
+            <div class="item-card-title">提升洽詢轉化與接案機率</div>
+            <div class="item-card-note">讓業主約談前就能看見實績、評估契合度</div>
+          </div>
+          <div class="item-card compact">
+            <div class="item-card-title">工程實績系統化陳列</div>
+            <div class="item-card-note">商場 · 酒店 · 辦公 · 公設場域分類瀏覽</div>
+          </div>
+          <div class="item-card compact">
+            <div class="item-card-title">品牌形象數位完整延伸</div>
+            <div class="item-card-note">Logo 色系 × 行動裝置適配 × 保留現有網域</div>
+          </div>
+        </div>
+      </div>
+      <div class="scope-col right">
+        <h3>範圍</h3>
+        <div class="item-cards cols-2">
+          <div class="item-card compact" data-num="01">
+            <div class="item-card-title">網站視覺規劃</div>
+          </div>
+          <div class="item-card compact" data-num="02">
+            <div class="item-card-title">網站頁面開發</div>
+            <div class="item-card-note">中英雙語全站</div>
+          </div>
+          <div class="item-card compact" data-num="03">
+            <div class="item-card-title">共通功能建置</div>
+          </div>
+          <div class="item-card compact" data-num="04">
+            <div class="item-card-title">上線部署與交付</div>
+          </div>
+        </div>
+        <div class="scope-exclude">
+          <p>不含 CMS、內容代操</p>
+          <p>不含攝影／3D（素材由貴司提供）</p>
+        </div>
+        <div class="scope-kpi">
+          <div class="kpi-box"><div class="k">10</div><div class="l">頁面</div></div>
+          <div class="kpi-box"><div class="k">10</div><div class="l">週（預估）</div></div>
+          <div class="kpi-box"><div class="k">1</div><div class="l">次交付</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <p class="label">Slide 3 · 服務項目明細（一）<span>約 2 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>依 Logo 色系 #1b203e、#3f68a8、#c0d1e5 規劃全站視覺語言，含字體、色彩、間距。正式開發前提供首頁與代表內頁視覺稿供確認，方向一致後再切版。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Service Details</span>
+      <span class="ih-title">一、網　站　視　覺　規　劃</span>
+      <span class="ih-num">No.02</span>
+    </div>
+    <div class="detail-body slide-body-cream">
+      <div class="slide-bg-watermark" aria-hidden="true"></div> 
+      <div class="item-cards cols-2">
+        <div class="item-card expandable">
+          <div class="item-card-title">網站整體視覺設計</div>
+          <div class="item-card-spec">深藍銀色系品牌風格</div>
+          <div class="item-card-note"><span class="color-chip" style="background:#1b203e"></span>#1b203e　<span class="color-chip" style="background:#3f68a8"></span>#3f68a8　<span class="color-chip" style="background:#c0d1e5"></span>#c0d1e5 · 全站字體／色彩／間距</div>
+          <div class="item-card-detail">
+            <div class="dt-row">依 Logo 既有色系延伸全站視覺語言：<strong>深藍 #1b203e</strong> 作為主色與深底、<strong>品牌藍 #3f68a8</strong> 為強調色與互動色、<strong>亮銀 #c0d1e5</strong> 用於分隔線與輔助。</div>
+            <div class="dt-row">字體系統採用 <strong>Noto Serif TC</strong>（標題）、<strong>Noto Sans TC</strong>（內文）、<strong>EB Garamond</strong>（英數字）三套搭配。</div>
+            <div class="dt-row">統一規範按鈕、表單、卡片、間距與 hover／active 互動狀態，確保跨頁一致性。</div>
+          </div>
+        </div>
+        <div class="item-card expandable">
+          <div class="item-card-title">頁面視覺稿確認</div>
+          <div class="item-card-spec">首頁＋代表內頁各一份</div>
+          <div class="item-card-note">開發前供確認，定稿後進入切版</div>
+          <div class="item-card-detail">
+            <div class="dt-row">正式開發前先提供 <strong>首頁完整 mockup</strong> 與 <strong>一份代表內頁 mockup</strong>（建議：服務項目或工程實績）供確認方向。</div>
+            <div class="dt-row">每份視覺稿包含 <strong>2 輪合理修改</strong>，雙方於視覺稿確認簽核後才進入切版開發，避免後段大幅返工。</div>
+            <div class="dt-row">其餘頁面依視覺稿延伸風格，不再另出全頁 mockup。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <p class="label">Slide 4 · 服務項目明細（二）<span>約 3 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>共 10 頁，全站中英雙語同步開發。工程實績除篩選列表外，另為商場、酒店、辦公展覽、公設各製作一頁成功案例範例頁，採同套版型，讓業主一眼看到各場域的實際承接成果。其餘頁面：首頁 6 區塊、加入鴻築招募頁。所有頁面內容同步提供繁體中文與英文版本。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Service Details</span>
+      <span class="ih-title">二、網　站　頁　面　開　發</span>
+      <span class="ih-num">No.03</span>
+    </div>
+    <div class="detail-body slide-body-white">
+      <div class="slide-bg-watermark" aria-hidden="true"></div>
+      <p class="detail-lead">網站頁面開發 · 共 10 頁 · 中英雙語</p>
+      <div class="item-cards cols-3">
+        <div class="item-card compact expandable">
+          <div class="item-card-title">首頁</div>
+          <div class="item-card-spec">6 個捲動區塊</div>
+          <div class="item-card-note">Hero、各區預覽、聯絡表單</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>區塊組成</strong>：Hero 主視覺、品牌定位語、服務預覽、案例輪播、最新消息、聯絡 CTA。</div>
+            <div class="dt-row">設計強調品牌氣場與案例張力，引導訪客往「服務」或「聯絡」轉化；首屏 3 秒內傳達公司定位。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">關於鴻築</div>
+          <div class="item-card-spec">4 個區塊</div>
+          <div class="item-card-note">紀事、歷程、部門、顧客定位</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>區塊組成</strong>：公司紀事介紹、發展歷程時間軸、主要部門分工、顧客定位說明。</div>
+            <div class="dt-row">突顯團隊規模與專業分工，建立業主對團隊承接力的信任。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">服務項目</div>
+          <div class="item-card-spec">3 個區塊</div>
+          <div class="item-card-note">核心服務、合作流程、合作邀請</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>區塊組成</strong>：核心服務介紹、合作流程說明、結尾聯絡及合作邀請之 CTA。</div>
+            <div class="dt-row">讓潛在客戶 30 秒內理解能委託什麼、流程怎麼走、下一步該如何聯絡。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">工程實績</div>
+          <div class="item-card-spec">場域篩選 + 列表 + 各場域範例頁</div>
+          <div class="item-card-note">商場／酒店／辦公／公設 · 各含一頁成功案例</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>四種場域分類</strong>：商場、酒店、辦公展覽、公設，支援篩選顯示。</div>
+            <div class="dt-row">列表頁呈現案例縮圖、案名與場域標籤；另針對每一場域各製作一頁<strong>成功案例範例頁</strong>，採用同套視覺版型。</div>
+            <div class="dt-row">四頁範例頁展示專案背景、設計亮點與成果照片，作為業主評估承接實力的具體依據。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">最新消息</div>
+          <div class="item-card-spec">3 個區塊</div>
+          <div class="item-card-note">工程動態、員工活動、友站連結</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>① 工程進度與公司動態</strong>：新聞卡片列，含日期、分類標籤、標題與摘要，呈現最新工程進展與公司消息。</div>
+            <div class="dt-row"><strong>② 員工活動</strong>：三欄卡片展示內部培訓、跨部門工作坊、年度成果交流等內部動態，強化公司文化形象。</div>
+            <div class="dt-row"><strong>③ 友站連結</strong>：分「合作夥伴」與「產業資源」兩欄，可填入合作廠商或相關機構連結。</div>
+            <div class="dt-row">內容由貴司提供素材，於內容置入階段一次性匯入；本期不含後台 CMS。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">加入鴻築</div>
+          <div class="item-card-spec">3 個區塊</div>
+          <div class="item-card-note">職缺、福利(員工活動)、環境照片</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>區塊組成</strong>：職缺資訊、員工福利與活動花絮、辦公環境照片。</div>
+            <div class="dt-row">對外招募窗口，若有需求可額外加掛線上履歷表單（另議）。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <p class="label">Slide 5 · 服務項目明細（三）<span>約 2 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>全站底部統一聯絡 CTA；三種螢幕適配；導覽六連結＋繁中｜EN 切換，本期同步啟用中英雙語版；每頁 SEO meta。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Service Details</span>
+      <span class="ih-title">三、共　用　功　能</span>
+      <span class="ih-num">No.04</span>
+    </div>
+    <div class="detail-body slide-body-cream">
+      <div class="slide-bg-watermark" aria-hidden="true"></div>
+      <div class="item-cards cols-2">
+        <div class="item-card compact expandable">
+          <div class="item-card-title">聯絡 CTA 區塊</div>
+          <div class="item-card-spec">全站每頁底部</div>
+          <div class="item-card-note">聯絡資訊＋詢問表單</div>
+          <div class="item-card-detail">
+            <div class="dt-row">全站每頁底部統一放置聯絡資訊區與簡易詢問表單。</div>
+            <div class="dt-row"><strong>表單欄位</strong>：姓名、電話、Email、需求說明。</div>
+            <div class="dt-row">送出後透過後端 PHP 寄信至貴司指定信箱；含基本防呆與 reCAPTCHA 阻擋機器人。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">手機版自動適配</div>
+          <div class="item-card-spec">手機／桌機</div>
+          <div class="item-card-note">各尺寸排版最佳化</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>雙斷點</strong>：手機 ≦767px、桌機 ≧1025px，各自最佳化版型；平板尺寸（768–1024px）採桌機版自動縮放，視覺一致。</div>
+            <div class="dt-row">圖片自動依裝置載入合適尺寸，並指定焦點區域避免重要主體被裁切。</div>
+            <div class="dt-row">手機版導覽改用漢堡選單，CTA 固定於底部方便點擊。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">網站導覽列</div>
+          <div class="item-card-spec">六連結＋繁中｜EN</div>
+          <div class="item-card-note">active 標示 · 中英切換</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>六大主連結</strong>：首頁、關於鴻築、服務項目、工程實績、最新消息、加入鴻築。</div>
+            <div class="dt-row">目前頁面以 active 狀態高亮，捲動時 sticky 固定於頂部。</div>
+            <div class="dt-row">右側 <strong>繁中／EN</strong> 切換鈕，本期同步啟用中英雙語，全站 10 頁皆含英文版本。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">基礎 SEO 設定</div>
+          <div class="item-card-spec">title、description</div>
+          <div class="item-card-note">各頁搜尋基本資訊</div>
+          <div class="item-card-detail">
+            <div class="dt-row">每頁設置獨立 <strong>title</strong> 與 <strong>meta description</strong>，搭配 Open Graph 預覽資訊。</div>
+            <div class="dt-row">提交 sitemap.xml 至 Google Search Console，提升收錄速度。</div>
+            <div class="dt-row"><strong>不含</strong>：關鍵字研究、內容代寫、長期 SEO 代操；如需可另案合作。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <p class="label">Slide 6 · 服務項目明細（四）<span>約 2 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>部署 fp-enterprise.com.tw；Chrome／Safari／Edge 測試；置入客戶素材；交付網站交接文件 PDF，說明架構、表單設定與修改需求提交方式。如需自主管理內容，Phase 2 可加購 CMS 後台。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Service Details</span>
+      <span class="ih-title">四、上　線　部　署　與　交　付</span>
+      <span class="ih-num">No.05</span>
+    </div>
+    <div class="detail-body slide-body-white">
+      <div class="slide-bg-watermark" aria-hidden="true"></div>
+      <div class="item-cards cols-2">
+        <div class="item-card compact expandable">
+          <div class="item-card-title">主機部署與網域</div>
+          <div class="item-card-spec">fp-enterprise.com.tw</div>
+          <div class="item-card-note">網站部署、協助網域 DNS 指向</div>
+          <div class="item-card-detail">
+            <div class="dt-row">將完成的網站部署至主機，並完成 <strong>fp-enterprise.com.tw</strong> 網域指向設定。</div>
+            <div class="dt-row">設定 <strong>SSL 憑證</strong> 確保 HTTPS 連線安全與 SEO 友善。</div>
+            <div class="dt-row"><strong>主機與網域年費由貴司支付</strong>，本案可協助代購與代管（另議）。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">瀏覽器相容測試</div>
+          <div class="item-card-spec">Chrome、Safari、Edge</div>
+          <div class="item-card-note">功能與排版確認</div>
+          <div class="item-card-detail">
+            <div class="dt-row">桌機端於 <strong>Chrome、Safari、Edge</strong> 三大主流瀏覽器最新版進行完整功能與排版測試。</div>
+            <div class="dt-row">行動端以 <strong>iOS Safari</strong> 與 <strong>Android Chrome</strong> 最新版為主要測試裝置。</div>
+            <div class="dt-row">IE 與舊版 Edge Legacy 不在支援範圍內。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">素材整理與置入</div>
+          <div class="item-card-spec">客戶提供素材</div>
+          <div class="item-card-note">照片、文案上架</div>
+          <div class="item-card-detail">
+            <div class="dt-row">將貴司提供的 <strong>照片、文案、案例資料</strong> 整理上架。</div>
+            <div class="dt-row">圖片進行 <strong>壓縮與裁切最佳化</strong>（WebP / 多解析度），確保載入速度與顯示品質。</div>
+            <div class="dt-row">素材需於 <strong>W5</strong> 前提供完成，逾期該階段順延。</div>
+          </div>
+        </div>
+        <div class="item-card compact expandable">
+          <div class="item-card-title">網站交接文件</div>
+          <div class="item-card-spec">PDF 一份</div>
+          <div class="item-card-note">後續維護對接說明</div>
+          <div class="item-card-detail">
+            <div class="dt-row">交付後提供一份 <strong>網站交接 PDF</strong>，說明網站整體架構與檔案結構。</div>
+            <div class="dt-row">內容涵蓋：聯絡表單收件信箱設定方式、主機與網域管理資訊、常見問題排查。</div>
+            <div class="dt-row">內容異動（文案、圖片更換）請透過<strong>修改需求單</strong>提交，由本公司協助處理；如需自主管理內容，可於 Phase 2 加購 CMS 後台。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <p class="label">Slide 7 · 執行方式 <span>約 3 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>五階段：簽約啟動→規劃設計→開發建置→內容置入→測試上線。啟動時一併確認素材清單，含工程實績的四場域案例照片與文案、中英雙語文案需求；設計階段除主頁視覺稿外，也一併確認案例頁版型與中英排版。每階段提供預覽連結確認，含 2 輪合理修改；超範圍變更另計。驗收：6 主頁 + 4 場域案例頁完成（含英文版）、表單可寄信、中英切換正常、主流瀏覽器與手機正常顯示。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Execution</span>
+      <span class="ih-title">執　行　方　式</span>
+      <span class="ih-num">No.06</span>
+    </div>
+    <div class="process-body slide-body-white">
+      <div class="slide-bg-watermark" aria-hidden="true"></div>
+      <div class="process-steps">
+        <div class="p-step">
+          <div class="p-num"><img src="assets/icon-kick-offf.png" class="p-icon" alt=""></div>
+          <div class="p-title">啟動確認</div>
+          <div class="p-desc">簽約 · 素材與案例資料清單</div>
+        </div>
+        <div class="p-step">
+          <div class="p-num"><img src="assets/icon-design.png" class="p-icon" alt=""></div>
+          <div class="p-title">規劃設計</div>
+          <div class="p-desc">架構 · 視覺定稿 · 案例頁版型確認</div>
+        </div>
+        <div class="p-step">
+          <div class="p-num"><img src="assets/icon-develop.png" class="p-icon" alt=""></div>
+          <div class="p-title">開發建置</div>
+          <div class="p-desc">6 主頁切版 · 4 場域案例頁 · 表單串接</div>
+        </div>
+        <div class="p-step">
+          <div class="p-num"><img src="assets/icon-content.png" class="p-icon" alt=""></div>
+          <div class="p-title">內容置入</div>
+          <div class="p-desc">素材上架 · 中英內容置入 · 案例填充</div>
+        </div>
+        <div class="p-step">
+          <div class="p-num"><img src="assets/icon-test-online.png" class="p-icon" alt=""></div>
+          <div class="p-title">測試上線</div>
+          <div class="p-desc">跨裝置測試 · 部署 · 交付</div>
+        </div>
+      </div>
+      <div class="process-note">
+        每階段預覽確認 · 含 2 輪修改　｜　驗收：10 頁（含英文版）、表單可寄信、中英切換正常、跨裝置瀏覽
+      </div>
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <p class="label">Slide 8 · 專案期程 <span>約 3 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>自簽約起約 10 週，含中英雙語內容置入，實際依素材提供速度調整。W1 啟動收集、W2–3 定稿、W3–6 開發、W6–8 內容置入（含英文版）、W9–10 測試上線。若確認逾 5 個工作天，該階段順延。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Timeline</span>
+      <span class="ih-title">專　案　期　程</span>
+      <span class="ih-num">No.07</span>
+    </div>
+    <div class="timeline-body slide-body-cream">
+      <div class="slide-bg-watermark" aria-hidden="true"></div>
+      <div class="timeline-summary">
+        <div class="tl-card"><div class="v">10 週</div><div class="l">總工期</div></div>
+        <div class="tl-card"><div class="v placeholder">---</div><div class="l">預計啟動日</div></div>
+        <div class="tl-card"><div class="v placeholder">---</div><div class="l">預計上線日</div></div>
+      </div>
+      <div class="gantt">
+        <div class="gantt-head">
+          <span></span><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span><span>W9</span><span>W10</span>
+        </div>
+        <div class="gantt-row">
+          <span class="gantt-label">啟動・素材收集</span>
+          <div class="gantt-cell on"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+          <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        </div>
+        <div class="gantt-row">
+          <span class="gantt-label">規劃・視覺定稿</span>
+          <div class="gantt-cell"></div><div class="gantt-cell on-accent"></div><div class="gantt-cell on-accent"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+          <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        </div>
+        <div class="gantt-row">
+          <span class="gantt-label">前端開發</span>
+          <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell on"></div><div class="gantt-cell on"></div><div class="gantt-cell on"></div>
+          <div class="gantt-cell on"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        </div>
+        <div class="gantt-row">
+          <span class="gantt-label">內容置入・確認</span>
+          <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+          <div class="gantt-cell on-accent"></div><div class="gantt-cell on-accent"></div><div class="gantt-cell on-accent"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+        </div>
+        <div class="gantt-row">
+          <span class="gantt-label">測試・正式上線</span>
+          <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div>
+          <div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell"></div><div class="gantt-cell on"></div><div class="gantt-cell go"></div>
+        </div>
+      </div>
+      <div class="timeline-foot">※ 期程依貴司素材提供速度調整；若逾 5 個工作天未回覆確認，該階段順延計算</div>
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 9 -->
+  <p class="label">Slide 9 · 費用報價 <span>約 4 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>本次範圍包含 6 主頁 + 4 場域案例頁，共 10 頁，全站同步提供中英雙語版本，報價已一併涵蓋。專案總價 NT$138,000 含稅（5%），分三期付款：簽約款 40%（NT$55,200）、視覺定稿開發啟動前 40%（NT$55,200）、驗收上線後尾款 20%（NT$27,600）。詳細明細請參閱後附報價單。主機與網域年費另計，可代管另議。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Quotation</span>
+      <span class="ih-title">費　用　報　價</span>
+      <span class="ih-num">No.08</span>
+    </div>
+    <div class="quote-simple-body slide-body-white">
+      <div class="slide-bg-watermark" aria-hidden="true"></div>
+
+      <!-- 左欄：服務項目條列 + 總價 -->
+      <div class="qs-items">
+        <div class="qs-item"><span class="qs-item-dot"></span><span>一、網站視覺規劃　<span class="qs-item-sub">整體視覺設計、頁面視覺稿確認</span></span></div>
+        <div class="qs-item"><span class="qs-item-dot"></span><span>二、網站頁面開發　<span class="qs-item-sub">6 主頁（首頁＋5 內頁）+ 4 場域案例頁，共 10 頁</span></span></div>
+        <div class="qs-item"><span class="qs-item-dot"></span><span>三、共用功能建置　<span class="qs-item-sub">聯絡表單、手機版適配、導覽列、SEO</span></span></div>
+        <div class="qs-item"><span class="qs-item-dot"></span><span>四、上線部署與交付　<span class="qs-item-sub">主機部署、瀏覽器測試、素材置入、維護文件</span></span></div>
+        <div class="qs-total-block">
+          <div class="qs-label">Project Total · 專案總價（含稅 5%）</div>
+          <div class="qs-amount">NT$ 138,000</div>
+          <div class="qs-footnote">含中英雙語全站開發　·　詳細明細請參閱隨附報價單　·　主機／網域年費另計</div>
+        </div>
+      </div>
+
+      <!-- 右欄：付款三期 -->
+      <div class="qs-right-col">
+        <div class="qs-phases">
+          <div class="qs-phase">
+            <div class="qs-phase-pct">40%</div>
+            <div class="qs-phase-info">
+              <div class="qs-phase-name">簽約款</div>
+              <div class="qs-phase-amt">NT$ 55,200</div>
+            </div>
+            <div class="qs-phase-note">合約簽署後<br>5 個工作日內</div>
+          </div>
+          <div class="qs-phase">
+            <div class="qs-phase-pct">40%</div>
+            <div class="qs-phase-info">
+              <div class="qs-phase-name">開發款</div>
+              <div class="qs-phase-amt">NT$ 55,200</div>
+            </div>
+            <div class="qs-phase-note">視覺稿確認後<br>開發啟動前</div>
+          </div>
+          <div class="qs-phase">
+            <div class="qs-phase-pct">20%</div>
+            <div class="qs-phase-info">
+              <div class="qs-phase-name">尾款</div>
+              <div class="qs-phase-amt">NT$ 27,600</div>
+            </div>
+            <div class="qs-phase-note">網站驗收完成<br>正式上線後</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 10 -->
+  <p class="label">Slide 10 · Phase 2 進階規劃 <span>約 2 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>Phase 1 上線後，可視業務發展分三階段強化。最建議第一步是 CMS 後台加 LINE 整合，讓貴司能自主更新內容、即時收到詢問通知；第二步持續補充真實案例頁，讓工程實績隨業務累積成長；第三步 SEO 內容策略與 Google Analytics 轉化追蹤，讓網站從展示工具升級為持續帶案的業績引擎。以上均可依實際需求單項或整批規劃，上線後再議。</div>
+  <div class="slide slide-inner">
+    <div class="inner-header">
+      <span class="ih-eyebrow">Phase 2 · Roadmap</span>
+      <span class="ih-title">進　階　規　劃　參　考</span>
+      <span class="ih-num">No.09</span>
+    </div>
+    <div class="detail-body slide-body-cream">
+      <div class="slide-bg-watermark" aria-hidden="true"></div>
+      <p class="detail-lead">網站上線後的可選強化方向（供後續規劃參考）</p>
+      <div class="item-cards cols-3">
+
+        <div class="item-card compact expandable">
+          <div class="item-card-title">內容管理獨立化</div>
+          <div class="item-card-spec">建議優先級 · 高</div>
+          <div class="item-card-note">貴司可自行更新，不依賴開發端</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>CMS 後台建置</strong>：輕量後台（Statamic / Kirby），管理最新消息與工程實績，無需接觸程式碼。</div>
+            <div class="dt-row"><strong>案例頁持續擴充</strong>：每次完工後即可新增真實案例頁，採 Phase 1 版型複製建入，長期累積信任資產。</div>
+            <div class="dt-row"><strong>LINE 官方帳號整合</strong>：表單送出後即時推播至 LINE 群組，降低詢問流失率。</div>
+          </div>
+        </div>
+
+        <div class="item-card compact expandable">
+          <div class="item-card-title">詢問轉化強化</div>
+          <div class="item-card-spec">建議優先級 · 中</div>
+          <div class="item-card-note">提升業主主動詢案的比例</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>多步驟引導式表單</strong>：加入場域類型、預算區間、工期需求選項，幫助雙方快速確認契合度，降低無效詢問。</div>
+            <div class="dt-row"><strong>Google Analytics 轉化追蹤</strong>：設定「表單送出」為目標事件，追蹤哪頁案例、哪個場域帶來最多詢問，協助業務聚焦。</div>
+            <div class="dt-row"><strong>熱區 CTA 優化</strong>：依實際瀏覽數據調整頁面重點按鈕位置與文案，持續提升點擊率。</div>
+          </div>
+        </div>
+
+        <div class="item-card compact expandable">
+          <div class="item-card-title">長期品牌曝光</div>
+          <div class="item-card-spec">建議優先級 · 長期</div>
+          <div class="item-card-note">讓網站成為持續帶案的引擎</div>
+          <div class="item-card-detail">
+            <div class="dt-row"><strong>SEO 內容策略</strong>：針對「辦公室裝修」「酒店工程廠商」等高意圖關鍵字，定期發布產業文章，累積自然搜尋流量。</div>
+            <div class="dt-row"><strong>360° 虛擬導覽 / 影片整合</strong>：在案例頁嵌入空拍或室內環景，大幅提升業主評估信心，降低初次約談門檻。</div>
+            <div class="dt-row"><strong>口碑與評價系統</strong>：業主完工見證、Google 評論整合，強化品牌社會信任度。</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-footer">萬能數維有限公司 x 鴻築室內裝修設計網站建置專案</div>
+  </div>
+
+  <!-- SLIDE 11 -->
+  <p class="label">Slide 11 · 結尾 <span>約 2 分鐘</span></p>
+  <div class="script-note"><strong>講稿：</strong>若方向 OK，請一週內回饋調整；確認後簽約、付訂金，再開啟動會對齊素材與 W1 時程。感謝聆聽，歡迎提問。</div>
+  <div class="slide slide-closing">
+    <div class="cl-left">
+      <div class="cl-eyebrow">Next Steps</div>
+      <div class="cl-title">感謝聆聽，<br>期待與您共同合作</div>
+      <div class="next-steps-label">後續行動建議：</div>
+      <div class="next-steps">
+        <div class="next-step">
+          <span class="ns-num">1</span>
+          <span class="ns-text"><strong>確認提案與報價</strong></span>
+        </div>
+        <div class="next-step">
+          <span class="ns-num">2</span>
+          <span class="ns-text"><strong>簽署合約</strong></span>
+        </div>
+        <div class="next-step">
+          <span class="ns-num">3</span>
+          <span class="ns-text"><strong>啟動會議</strong></span>
+        </div>
+      </div>
+    </div>
+    <div class="cl-right">
+      <div class="cl-vendor-wrap">
+        <img src="assets/dghm-logo.png" class="cl-vendor-logo" alt="萬能數維有限公司">
+      </div>
+      <div class="cl-contact-block">
+        <div class="cl-row"><span class="cl-key">網站</span><span class="cl-val">dghm.tw</span></div>
+        <div class="cl-row"><span class="cl-key">Email</span><span class="cl-val">help@dghm.tw</span></div>
+        <div class="cl-row"><span class="cl-key">電話</span><span class="cl-val placeholder">0937-805149</span></div>
+        <div class="cl-row"><span class="cl-key">聯絡人</span><span class="cl-val placeholder">謝萬錤 Aries Hsieh</span></div>
+      </div>
+    </div>
+    <div class="slide-footer light">感謝鴻築團隊撥冗聆聽</div>
+  </div>
+
+<script>
+(function() {
+  'use strict';
+
+  const SLIDE_W = 960;
+  const SLIDE_H = 540;
+  const body = document.body;
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const counter = document.getElementById('presCounter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const modeToggle = document.getElementById('modeToggle');
+  const hint = document.querySelector('.pres-hint');
+
+  let currentIndex = 0;
+
+  // ---- 縮放：依視窗計算 slide scale，等比 fit ----
+  function updateScale() {
+    if (!body.classList.contains('presentation-mode')) return;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const scale = Math.min(vw / SLIDE_W, vh / SLIDE_H);
+    document.documentElement.style.setProperty('--slide-scale', scale.toFixed(4));
+  }
+  window.addEventListener('resize', updateScale);
+
+  // ---- 切換 active slide ----
+  function showSlide(i) {
+    currentIndex = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === currentIndex));
+    counter.textContent = (currentIndex + 1) + ' / ' + slides.length;
+    collapseAllCards();
+  }
+  function nextSlide() {
+    if (currentIndex < slides.length - 1) showSlide(currentIndex + 1);
+  }
+  function prevSlide() {
+    if (currentIndex > 0) showSlide(currentIndex - 1);
+  }
+
+  // ---- 卡片展開／收合 ----
+  function collapseAllCards(scope) {
+    const root = scope || document;
+    root.querySelectorAll('.item-cards.has-expanded').forEach(g => g.classList.remove('has-expanded'));
+    // 把移出去的 expanded card 放回原本位置
+    document.querySelectorAll('.item-card.expanded').forEach(c => {
+      c.classList.remove('expanded');
+      c.setAttribute('aria-expanded', 'false');
+      if (c._originalParent) {
+        c._originalParent.insertBefore(c, c._originalNextSibling || null);
+        c._originalParent = null;
+        c._originalNextSibling = null;
+      }
+    });
+    const overlay = document.querySelector('.card-overlay');
+    if (overlay) overlay.remove();
+  }
+  function toggleCard(card) {
+    if (!body.classList.contains('presentation-mode')) return;
+    const wasExpanded = card.classList.contains('expanded');
+    collapseAllCards();
+    if (!wasExpanded) {
+      const group = card.parentElement;
+      const overlay = document.createElement('div');
+      overlay.className = 'card-overlay';
+      overlay.addEventListener('click', (e) => { e.stopPropagation(); collapseAllCards(); });
+      body.appendChild(overlay);
+      card._originalParent = group;
+      card._originalNextSibling = card.nextSibling;
+      card.classList.add('expanded');
+      card.setAttribute('aria-expanded', 'true');
+      body.appendChild(card);
+      group.classList.add('has-expanded');
+    }
+  }
+  document.querySelectorAll('.item-card.expandable').forEach(card => {
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-expanded', 'false');
+    card.addEventListener('click', (e) => {
+      if (!body.classList.contains('presentation-mode')) return;
+      e.stopPropagation();
+      toggleCard(card);
+    });
+    card.addEventListener('keydown', (e) => {
+      if (!body.classList.contains('presentation-mode')) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleCard(card);
+      }
+    });
+  });
+
+  // ---- 點擊翻頁（左鍵）----
+  function isInteractiveTarget(el) {
+    return el.closest('button, a, input, textarea, select, .pres-controls, .item-card.expandable, .card-overlay');
+  }
+  document.addEventListener('click', (e) => {
+    if (!body.classList.contains('presentation-mode')) return;
+    if (e.button !== 0) return;
+    if (isInteractiveTarget(e.target)) return;
+
+    // 若有展開的卡片，先收合，不翻頁
+    const expanded = document.querySelector('.item-card.expanded');
+    if (expanded) {
+      collapseAllCards();
+      return;
+    }
+    nextSlide();
+  });
+
+  // ---- 鍵盤 ----
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'r' || e.key === 'R') {
+      toggleMode();
+      return;
+    }
+    if (!body.classList.contains('presentation-mode')) return;
+    if (e.key === 'ArrowLeft') { prevSlide(); e.preventDefault(); }
+    else if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { nextSlide(); e.preventDefault(); }
+    else if (e.key === 'Escape') {
+      const expanded = document.querySelector('.item-card.expanded');
+      if (expanded) { collapseAllCards(); }
+      else { showSlide(0); }
+    }
+    else if (e.key === 'Home') { showSlide(0); }
+    else if (e.key === 'End') { showSlide(slides.length - 1); }
+  });
+
+  // ---- 按鈕 ----
+  prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); });
+  nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); });
+  modeToggle.addEventListener('click', (e) => { e.stopPropagation(); toggleMode(); });
+
+  // ---- 模式切換 ----
+  function toggleMode() {
+    const isPres = body.classList.toggle('presentation-mode');
+    modeToggle.textContent = isPres ? '閱讀模式' : '簡報模式';
+    modeToggle.setAttribute('aria-pressed', isPres ? 'true' : 'false');
+    collapseAllCards();
+    if (isPres) {
+      updateScale();
+      showSlide(currentIndex);
+    } else {
+      // 閱讀模式：顯示所有 slide
+      slides.forEach(s => s.classList.remove('active'));
+    }
+  }
+
+  // ---- 初始化 ----
+  updateScale();
+  showSlide(0);
+
+  // 進入後 6 秒淡出提示
+  if (hint) {
+    setTimeout(() => { hint.style.opacity = '0'; }, 6000);
+  }
+})();
+</script>
+
+</body>
+</html>

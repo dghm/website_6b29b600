@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreetEasy Auto-Reply — Inbox Authorization Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0a;
+    --black:#000;
+    --blue:#0064E5;
+    --blue-dk:#0053d4;
+    --tint:#F2F7FF;
+    --tint2:#EAF1FE;
+    --chip-border:#D6E4FC;
+    --border:#E3E6EC;
+    --gray:#6B7280;
+    --gray-l:#9AA4B2;
+    --red:#E11D2A;
+    --serif:'Newsreader', Georgia, serif;
+    --sans:'Hanken Grotesk', system-ui, sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#E9EBEE;}
+  body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;}
+
+  .sheet{
+    max-width:200mm;background:#fff;margin:0 auto;
+    box-shadow:0 2px 18px rgba(0,0,0,.10);
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead{padding:15mm 18mm 0;}
+  .mast-row{display:flex;justify-content:space-between;align-items:flex-end;}
+  .wordmark{font-family:var(--sans);font-weight:700;letter-spacing:4px;font-size:22px;color:var(--ink);line-height:1;}
+  .mast-label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);padding-bottom:2px;}
+  .mast-accent{width:34px;height:3px;background:var(--blue);margin-top:9px;}
+  .mast-rule{height:1px;background:var(--black);margin-top:5px;}
+
+  /* ---------- Content ---------- */
+  .content{padding:9mm 18mm 0;}
+
+  .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:7px;}
+  h1{font-family:var(--serif);font-weight:500;font-size:32px;line-height:1.12;letter-spacing:-0.3px;color:var(--ink);margin-bottom:12px;}
+  .lede{font-size:13px;line-height:1.65;color:#33373d;}
+  .lede strong{font-weight:600;color:var(--ink);}
+
+  /* callout / security */
+  .callout{background:var(--tint2);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;margin-top:15px;}
+  .callout .ic{font-size:15px;line-height:1.4;flex-shrink:0;}
+  .callout p{font-size:12px;line-height:1.6;color:#2b2f35;}
+  .callout strong{font-weight:600;color:var(--ink);}
+
+  /* before you start */
+  .block-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin:20px 0 10px;}
+  .checks{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .checks li{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:#2b2f35;line-height:1.45;}
+  .checks .tk{color:var(--blue);font-weight:700;flex-shrink:0;}
+
+  /* ===== UNIT — one piece of software ===== */
+  .unit{margin-top:30px;}
+  .unit + .unit{margin-top:54px;}
+  .unit-band{background:var(--tint2);border:1px solid var(--chip-border);border-left:6px solid var(--blue);border-radius:9px;padding:16px 20px;}
+  .unit-band .tool{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:4px;}
+  .unit-band h2{font-family:var(--serif);font-weight:500;font-size:25px;line-height:1.15;color:var(--ink);}
+  .unit-band p{font-size:12px;color:#33373d;line-height:1.55;margin-top:6px;max-width:160mm;}
+
+  /* divider between two software units */
+  .switch{display:flex;align-items:center;gap:14px;margin:46px 0 0;color:var(--gray-l);}
+  .switch .ln{flex:1;height:1px;background:var(--border);}
+  .switch .tx{font-family:var(--mono);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gray-l);}
+
+  /* sub-group heading inside a unit */
+  .subhead{font-family:var(--serif);font-weight:500;font-size:16px;color:var(--blue-dk);margin:30px 0 4px;padding-bottom:6px;border-bottom:1px solid var(--chip-border);}
+
+  /* steps */
+  .step{margin-top:20px;page-break-inside:avoid;break-inside:avoid;}
+  .step-head{display:flex;align-items:center;gap:11px;margin-bottom:7px;}
+  .badge{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.5px;background:var(--ink);color:#fff;border-radius:4px;padding:3px 8px;flex-shrink:0;white-space:nowrap;}
+  .step-title{font-family:var(--serif);font-weight:500;font-size:17px;color:var(--ink);line-height:1.25;}
+  .step-body{margin-left:0;}
+  ol.do{margin:0;padding:0;list-style:none;counter-reset:s;}
+  ol.do li{counter-increment:s;position:relative;padding:0 0 6px 26px;font-size:12px;line-height:1.55;color:#2b2f35;}
+  ol.do li::before{content:counter(s);position:absolute;left:0;top:-1px;width:17px;height:17px;background:var(--red);color:#fff;border-radius:50%;font-family:var(--mono);font-size:9.5px;font-weight:500;display:flex;align-items:center;justify-content:center;}
+  ol.do li strong{font-weight:600;color:var(--ink);}
+  /* unnumbered actions — screens with no red bubble */
+  ol.do.flat li::before{content:"—";background:none;color:var(--blue);font-weight:700;width:auto;height:auto;font-size:12px;top:-1px;}
+  .marker-note{font-size:11px;color:var(--gray);font-style:italic;margin:4px 0 0 26px;line-height:1.5;}
+
+  li.li-imp{background:var(--tint2);border-radius:6px;padding:8px 12px 8px 32px !important;margin:4px 0;}
+  li.li-imp::before{left:9px;top:8px;}
+  li.li-imp .imp-tag{display:inline-block;font-family:var(--mono);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;color:#fff;background:var(--blue);padding:1px 6px;border-radius:3px;margin-right:6px;vertical-align:1px;}
+
+  /* mono chip */
+  .k{font-family:var(--mono);font-size:0.85em;background:var(--tint2);color:var(--blue-dk);padding:1px 5px;border-radius:3px;border:1px solid var(--chip-border);white-space:nowrap;}
+
+  /* screenshot */
+  figure{margin:11px 0 0;}
+  figure img{display:block;width:100%;height:auto;border:1px solid var(--border);border-radius:7px;}
+  figcaption{font-family:var(--mono);font-size:9.5px;letter-spacing:.5px;color:var(--gray-l);margin-top:6px;}
+  figcaption b{color:var(--gray);font-weight:500;}
+
+  /* control box */
+  .ctrl{border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-top:26px;page-break-inside:avoid;break-inside:avoid;}
+  .ctrl h3{font-family:var(--serif);font-weight:500;font-size:17px;margin-bottom:10px;}
+  .ctrl ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .ctrl li{display:flex;gap:10px;font-size:12px;line-height:1.5;color:#2b2f35;}
+  .ctrl .dot{color:var(--blue);font-weight:700;flex-shrink:0;}
+
+  .closing{margin-top:18px;font-family:var(--serif);font-size:14px;font-style:italic;color:#3a3f46;line-height:1.6;}
+  .next-box{background:var(--tint);border:1px dashed var(--chip-border);border-radius:8px;padding:15px 18px;margin-top:16px;}
+  .next-box .nb-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
+  .next-box ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
+  .next-box li{display:flex;gap:10px;font-size:12px;line-height:1.5;color:#2b2f35;}
+  .next-box .dot{color:var(--blue);font-weight:700;flex-shrink:0;}
+
+  /* footer */
+  .foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);margin:30px 18mm 0;padding:6mm 0;font-size:9.5px;color:var(--gray);letter-spacing:.2px;}
+  .foot .fl strong{color:var(--ink);font-weight:700;letter-spacing:1px;}
+  .foot .fr{font-family:var(--mono);}
+
+  @media print{
+    html,body{background:#fff;}
+    .sheet{max-width:none;box-shadow:none;margin:0;}
+    @page{size:A4;margin:12mm 0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <header class="masthead">
+    <div class="mast-row">
+      <div class="wordmark">COMPASS</div>
+      <div class="mast-label">Auto-Reply · Setup Guide</div>
+    </div>
+    <div class="mast-accent"></div>
+    <div class="mast-rule"></div>
+  </header>
+
+  <main class="content">
+    <div class="eyebrow">Agent Onboarding</div>
+    <h1>StreetEasy Auto-Reply<br>Inbox Authorization</h1>
+    <p class="lede">This system automatically sends an on-brand reply from <strong>your own Compass inbox</strong> to every StreetEasy rental inquiry — it checks your inbox <strong>about every 30 minutes</strong>, so renters hear back quickly, and every reply still comes from you. Setup has <strong>two parts in two different tools</strong>: first you create a label &amp; filter in <strong>Gmail</strong>, then you authorize your inbox once in <strong>Make</strong>. It takes about 10 minutes.</p>
+
+    <div class="callout">
+      <span class="ic">🔒</span>
+      <p><strong>Your password stays yours.</strong> You never share your Compass password with anyone. You enter it only on your company's own secure sign-in page — reached through Google's official sign-in flow, on your own computer — and you can remove the access yourself at any time.</p>
+    </div>
+
+    <div class="block-label">Before you start</div>
+    <ul class="checks">
+      <li><span class="tk">✓</span><span>You're signed in to your <strong>Compass Gmail</strong> on this computer.</span></li>
+      <li><span class="tk">✓</span><span>You have the <strong>Make automation account login</strong> (email + password), sent to you separately. <em>This is not your Compass login.</em></span></li>
+      <li><span class="tk">✓</span><span>About <strong>10 minutes</strong>.</span></li>
+    </ul>
+
+    <p class="lede" style="margin-top:14px;font-size:12px;color:var(--gray);"><strong style="color:var(--ink);">How to read this guide:</strong> each screenshot is one screen, and its <span style="color:var(--red);font-weight:600;">red numbers</span> restart at 1. In every step, the numbers below match the red bubbles on the screenshot beside them. A "—" marks a screen you just look at or pass through (no button to click).</p>
+
+    <!-- ============================================================ -->
+    <!-- UNIT 1 · GMAIL                                                -->
+    <!-- ============================================================ -->
+    <section class="unit">
+      <div class="unit-band">
+        <div class="tool">Part 1 of 2 · In Gmail</div>
+        <h2>Create a "StreetEasy" label &amp; filter</h2>
+        <p>This makes sure the system only ever sees StreetEasy inquiries — nothing else in your inbox. You'll create the label first, then a filter that auto-applies it.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">F-01</span><span class="step-title">Start a new label</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>In the left sidebar, next to <strong>Labels</strong>, click the <strong>+</strong> (Create new label).</li>
+          </ol>
+          <figure><img src="F-01.png" alt="Gmail sidebar with the + next to Labels highlighted"><figcaption><b>F-01</b> — Gmail · click + beside "Labels".</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">F-02</span><span class="step-title">Name it exactly "StreetEasy"</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Type the label name exactly: <span class="k">StreetEasy</span>.</li>
+            <li>Click <strong>Create</strong>.</li>
+          </ol>
+          <figure><img src="F-02.png" alt="New label dialog with StreetEasy typed and Create button"><figcaption><b>F-02</b> — New label dialog.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">F-03</span><span class="step-title">Open all settings</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Click the <strong>gear icon</strong> (top right).</li>
+            <li>Click <strong>See all settings</strong>.</li>
+          </ol>
+          <figure><img src="F-03.png" alt="Gmail quick settings panel with See all settings highlighted"><figcaption><b>F-03</b> — Quick settings.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">F-04</span><span class="step-title">Go to Filters and create a new one</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Open the <strong>Filters and Blocked Addresses</strong> tab.</li>
+            <li>Click <strong>Create a new filter</strong>.</li>
+          </ol>
+          <figure><img src="F-04.png" alt="Filters and Blocked Addresses tab with Create a new filter link"><figcaption><b>F-04</b> — Settings · Filters and Blocked Addresses.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">F-05</span><span class="step-title">Match StreetEasy mail</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>In the <strong>From</strong> field, enter <span class="k">noreply@email.streeteasy.com</span>.</li>
+            <li>Click <strong>Create filter</strong>.</li>
+          </ol>
+          <figure><img src="F-05.png" alt="Filter criteria with From field filled and Create filter button"><figcaption><b>F-05</b> — Filter criteria.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">F-06</span><span class="step-title">Choose what the filter does</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Tick <strong>Skip the Inbox (Archive it)</strong>.</li>
+            <li>Tick <strong>Apply the label</strong> and choose <span class="k">StreetEasy</span>.</li>
+            <li>Click <strong>Create filter</strong>.</li>
+          </ol>
+          <figure><img src="F-06.png" alt="Filter actions with Skip the Inbox and Apply the label StreetEasy ticked"><figcaption><b>F-06</b> — Filter actions.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">F-07</span><span class="step-title">Confirm the filter exists</span></div>
+        <div class="step-body">
+          <ol class="do flat">
+            <li>The filter now appears in the list (highlighted): <em>Matches: from:(noreply@email.streeteasy.com) · Do this: Skip Inbox, Apply label "StreetEasy".</em> Part 1 is done.</li>
+          </ol>
+          <p class="marker-note">These inquiries now skip your inbox and sit under the <strong>StreetEasy</strong> label in the left sidebar — click it anytime to find them.</p>
+          <figure><img src="F-07.png" alt="Filter list showing the new StreetEasy filter"><figcaption><b>F-07</b> — Confirmation · the new filter is saved.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <div class="switch"><span class="ln"></span><span class="tx">Switching tools → Make</span><span class="ln"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- UNIT 2 · MAKE                                                 -->
+    <!-- ============================================================ -->
+    <section class="unit">
+      <div class="unit-band">
+        <div class="tool">Part 2 of 2 · In Make</div>
+        <h2>Authorize your Compass inbox</h2>
+        <p>Log in to the Make automation account, open the scenario with your name, and connect your Compass Gmail to its two Gmail modules — the one that <strong>watches</strong> for inquiries and the one that <strong>sends</strong> the reply.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-01</span><span class="step-title">Log in to Make</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Go to <span class="k">make.com/en/login</span> and enter the <strong>email</strong> we provided.</li>
+            <li>Enter the <strong>password</strong> we provided.</li>
+            <li>Click <strong>Sign in</strong>.</li>
+          </ol>
+          <p class="marker-note">This is the shared Make automation account — <strong>not</strong> your Compass email or password.</p>
+          <figure><img src="M-01.png" alt="Make.com sign-in screen"><figcaption><b>M-01</b> — Make login.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-02</span><span class="step-title">Open Scenarios</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>In the left sidebar, click <strong>Scenarios</strong>.</li>
+          </ol>
+          <figure><img src="M-02.png" alt="Make dashboard with Scenarios in the left navigation"><figcaption><b>M-02</b> — Make dashboard.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-03</span><span class="step-title">Open the scenario with your name</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Find the scenario labeled with <strong>your own name</strong> and click to open it.</li>
+          </ol>
+          <figure><img src="M-03.png" alt="Scenario list with the agent's own scenario highlighted"><figcaption><b>M-03</b> — Scenario list.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-04</span><span class="step-title">The scenario you'll see</span></div>
+        <div class="step-body">
+          <ol class="do flat">
+            <li>This is your scenario layout: <strong>Gmail (Watch emails) → Tools → Text parser → Gmail (Send an email)</strong>. The next steps connect your inbox to the two Gmail modules.</li>
+          </ol>
+          <figure><img src="M-04.png" alt="Scenario diagram: Gmail, Tools, Text parser, Gmail"><figcaption><b>M-04</b> — Scenario overview.</figcaption></figure>
+        </div>
+      </div>
+
+      <!-- Sub-group: Watch-emails module -->
+      <div class="subhead">Connect your inbox to the first Gmail module (Watch emails)</div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-05-1</span><span class="step-title">Create the connection</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Click the <strong>first Gmail</strong> module (<em>Watch emails</em>).</li>
+            <li>Next to <strong>Connection</strong>, click <strong>Add</strong> — a "Create a connection" window opens.</li>
+            <li>In <strong>Connection name</strong>, enter <span class="k">[Your Name] Gmail connection</span> and remember it — you'll select it again later.</li>
+            <li>Click <strong>Sign in with Google</strong>.</li>
+          </ol>
+          <figure><img src="M-05-1.png" alt="Gmail module connection panel with Add, Connection name, and Sign in with Google"><figcaption><b>M-05-1</b> — Watch-emails module · create connection.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-05-2</span><span class="step-title">Use another account</span></div>
+        <div class="step-body">
+          <ol class="do flat">
+            <li>On the Google "Choose an account" screen, click <strong>"Use another account"</strong> (don't pick the existing one).</li>
+          </ol>
+          <figure><img src="M-05-2.png" alt="Google choose an account screen with Use another account highlighted"><figcaption><b>M-05-2</b> — Choose an account · Use another account.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-05-3</span><span class="step-title">Enter your Compass email</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Type your <span class="k">@compass.com</span> email.</li>
+            <li>Click <strong>Next</strong>.</li>
+          </ol>
+          <p class="marker-note">After Next, Compass's enterprise sign-in (Okta / 2-step) will ask you to verify it's really you. This runs <strong>on your own computer, with your own Compass account</strong> — we never see it. Once verified, you'll return to the screen in M-05-4. Your exact screen may look slightly different, but it will be a <strong>Compass-branded sign-in page</strong>.</p>
+          <figure><img src="M-05-3.png" alt="Google sign-in email field for the Compass account"><figcaption><b>M-05-3</b> — Enter your @compass.com email.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-05-4</span><span class="step-title">Confirm sign-in</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Click <strong>Continue</strong>.</li>
+          </ol>
+          <figure><img src="M-05-4.png" alt="Sign in to Make confirmation screen with Continue"><figcaption><b>M-05-4</b> — Confirm sign-in.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-05-5</span><span class="step-title">Grant access</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Tick <strong>Select all</strong> — this lets the system view and send mail for the auto-reply.</li>
+            <li>Click <strong>Continue</strong>.</li>
+          </ol>
+          <figure><img src="M-05-5.png" alt="Google permissions screen with Select all and Continue"><figcaption><b>M-05-5</b> — Grant access (view &amp; send mail).</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-06</span><span class="step-title">Confirm the connection &amp; save</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Back in Make, check that the <strong>connection you just named</strong> now appears in the highlighted box.</li>
+            <li>Click <strong>Save</strong>.</li>
+          </ol>
+          <figure><img src="M-06.png" alt="Make Gmail module showing the named connection and Save"><figcaption><b>M-06</b> — Connection added · Save.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-07</span><span class="step-title">Choose where to start</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Select <strong>From now on</strong>.</li>
+            <li>Click <strong>Save</strong>.</li>
+          </ol>
+          <figure><img src="M-07.png" alt="Choose where to start dialog with From now on selected"><figcaption><b>M-07</b> — Choose where to start.</figcaption></figure>
+        </div>
+      </div>
+
+      <!-- Sub-group: Send-email module -->
+      <div class="subhead">Connect the same inbox to the second Gmail module (Send an email)</div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-08</span><span class="step-title">Select your existing connection</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Click the <strong>last Gmail</strong> module (<em>Send an email</em>).</li>
+            <li>In the <strong>Connection</strong> dropdown, choose the connection you named earlier.</li>
+          </ol>
+          <figure><img src="M-08.png" alt="Send-email Gmail module with the connection dropdown open"><figcaption><b>M-08</b> — Send-email module · select your connection.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-09</span><span class="step-title">Update the connection permissions</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>In the <strong>"Update the connection permissions"</strong> window, click <strong>Continue</strong>.</li>
+          </ol>
+          <figure><img src="M-09.png" alt="Update the connection permissions window with Continue"><figcaption><b>M-09</b> — Update connection permissions.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-10-1</span><span class="step-title">Choose your account</span></div>
+        <div class="step-body">
+          <ol class="do flat">
+            <li>On Google's screen, choose your <span class="k">@compass.com</span> account.</li>
+          </ol>
+          <figure><img src="M-10-1.png" alt="Google choose an account screen"><figcaption><b>M-10-1</b> — Choose your Compass account.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-10-2</span><span class="step-title">Confirm</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Confirm the account and click <strong>Continue</strong>.</li>
+          </ol>
+          <figure><img src="M-10-2.png" alt="You're signing back in to Make screen with Continue"><figcaption><b>M-10-2</b> — Confirm sign-in.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-10-3</span><span class="step-title">Allow the added access</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Access is already granted — review and click <strong>Continue</strong>.</li>
+          </ol>
+          <figure><img src="M-10-3.png" alt="Make wants additional access screen with Continue"><figcaption><b>M-10-3</b> — Allow access (send on your behalf).</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-11</span><span class="step-title">Confirm the connection &amp; save</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>Check that the connection with <strong>your name</strong> shows in the highlighted box, then click <strong>Save</strong>.</li>
+          </ol>
+          <figure><img src="M-11.png" alt="Send-email module showing the named connection and Save"><figcaption><b>M-11</b> — Connection set · Save.</figcaption></figure>
+        </div>
+      </div>
+
+      <!-- Sub-group: save the scenario -->
+      <div class="subhead">Save the whole scenario</div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-12</span><span class="step-title">Click the Save icon</span></div>
+        <div class="step-body">
+          <ol class="do">
+            <li>At the bottom-center, click the <strong>disk (Save)</strong> icon — it has an orange dot when there are unsaved changes.</li>
+          </ol>
+          <figure><img src="M-12.png" alt="Bottom toolbar with the orange Save disk icon highlighted"><figcaption><b>M-12</b> — Save the scenario.</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-head"><span class="badge">M-13</span><span class="step-title">Saved successfully</span></div>
+        <div class="step-body">
+          <ol class="do flat">
+            <li>When <strong>"The scenario was saved."</strong> appears at the bottom-right and the disk icon turns <strong>green</strong>, the scenario is saved successfully. You're done.</li>
+          </ol>
+          <figure><img src="M-13.png" alt="The scenario was saved confirmation and green save icon"><figcaption><b>M-13</b> — Saved successfully.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- FINISH                                                        -->
+    <!-- ============================================================ -->
+    <div class="ctrl">
+      <h3>Your control &amp; security</h3>
+      <ul>
+        <li><span class="dot">—</span><span>We <strong>never see or store</strong> your Compass password.</span></li>
+        <li><span class="dot">—</span><span>The automation only ever reads and replies to mail labeled <span class="k">StreetEasy</span> — it ignores everything else in your inbox.</span></li>
+        <li><span class="dot">—</span><span>You can <strong>revoke access anytime</strong> at <span class="k">myaccount.google.com/permissions</span>.</span></li>
+      </ul>
+    </div>
+
+    <p class="closing">That completes the connection setup — your Compass inbox is now bound to both Gmail modules. If anything looked different along the way or you got stuck, email <a href="mailto:help@dghm.tw" style="color:var(--blue-dk);text-decoration:none;border-bottom:1px solid var(--chip-border);">help@dghm.tw</a> and we'll walk you through it on a quick call.</p>
+
+    <div class="next-box">
+      <div class="nb-label">What we need next</div>
+      <ul>
+        <li><span class="dot">—</span><span>The <strong>reply email content</strong> you'd like sent to renters.</span></li>
+        <li><span class="dot">—</span><span>Your <strong>YouCanBook.me</strong> booking link.</span></li>
+      </ul>
+      <p style="font-size:11.5px;color:var(--gray);margin-top:10px;line-height:1.5;">With these, we'll build and finalize your email template.</p>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <span class="fl">Prepared by <strong>DGHM</strong> · help@dghm.tw</span>
+    <span class="fr">StreetEasy Auto-Reply · Setup Guide</span>
+  </footer>
+</div>
+
+</body>
+</html>

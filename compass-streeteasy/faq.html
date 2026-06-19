@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compass NY — 客戶問答話術卡</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #000000;
+    --white: #FFFFFF;
+    --blue: #0064E5;
+    --blue-light: #EBF2FD;
+    --blue-mid: #CCDDF9;
+    --grey-100: #F5F5F5;
+    --grey-200: #E8E8E8;
+    --grey-400: #999999;
+    --grey-600: #555555;
+    --grey-800: #222222;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  .opening-script {
+    padding: 20px 48px;
+    background: var(--blue-light);
+    border-bottom: 1px solid var(--blue-mid);
+  }
+  .opening-script p {
+    max-width: 980px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--grey-800);
+    margin: 0;
+  }
+  .opening-script p + p {
+    margin-top: 12px;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--black);
+    padding: 28px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-header .brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: 0.04em;
+  }
+  .site-header .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--blue);
+    padding: 4px 10px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--black);
+    padding: 48px 48px 56px;
+    border-bottom: 3px solid var(--blue);
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 40px;
+    color: var(--white);
+    line-height: 1.2;
+    max-width: 640px;
+  }
+  .hero h1 em {
+    color: var(--blue);
+    font-style: italic;
+  }
+  .hero p {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--grey-400);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    padding: 24px 48px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--grey-200);
+    background: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding-bottom: 20px;
+  }
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border: 1.5px solid var(--grey-200);
+    background: transparent;
+    color: var(--grey-600);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover {
+    border-color: var(--black);
+    color: var(--black);
+  }
+  .filter-btn.active {
+    background: var(--black);
+    border-color: var(--black);
+    color: var(--white);
+  }
+  .filter-btn[data-cat="security"].active { background: #1a3a6b; border-color: #1a3a6b; }
+  .filter-btn[data-cat="cost"].active { background: #1a5c2a; border-color: #1a5c2a; }
+  .filter-btn[data-cat="feature"].active { background: #5c1a1a; border-color: #5c1a5c; }
+  .filter-btn[data-cat="timeline"].active { background: #5c4a1a; border-color: #5c4a1a; }
+  .filter-btn[data-cat="expand"].active { background: #1a4a4a; border-color: #1a4a4a; }
+
+  /* ── Main grid ── */
+  .main {
+    padding: 40px 48px 80px;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--grey-400);
+    margin-bottom: 20px;
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--grey-200);
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 2px;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--grey-100);
+    padding: 28px 30px 26px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: 3px solid transparent;
+    position: relative;
+  }
+  .card:hover {
+    background: var(--grey-200);
+  }
+  .card.open {
+    background: var(--white);
+    border-left-color: var(--blue);
+    box-shadow: inset 0 0 0 1px var(--grey-200);
+  }
+
+  .card-cat {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .card[data-cat="security"] .card-cat { color: #1a3a6b; }
+  .card[data-cat="cost"] .card-cat { color: #1a5c2a; }
+  .card[data-cat="feature"] .card-cat { color: #7a1a7a; }
+  .card[data-cat="timeline"] .card-cat { color: #7a5a1a; }
+  .card[data-cat="expand"] .card-cat { color: #1a5c5c; }
+
+  .card-q {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--black);
+    padding-right: 32px;
+  }
+
+  .card-toggle {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    width: 24px;
+    height: 24px;
+    border: 1.5px solid var(--grey-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .card-toggle::before,
+  .card-toggle::after {
+    content: '';
+    position: absolute;
+    background: var(--grey-600);
+    transition: all 0.25s;
+  }
+  .card-toggle::before { width: 10px; height: 1.5px; }
+  .card-toggle::after  { width: 1.5px; height: 10px; }
+  .card.open .card-toggle { border-color: var(--blue); }
+  .card.open .card-toggle::before { background: var(--blue); }
+  .card.open .card-toggle::after  { transform: scaleY(0); background: var(--blue); }
+
+  .card-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s;
+    opacity: 0;
+  }
+  .card.open .card-answer {
+    max-height: 400px;
+    opacity: 1;
+  }
+
+  .card-answer-inner {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--grey-200);
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--grey-800);
+    font-weight: 400;
+  }
+
+  .card-answer-inner .highlight {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 2px 7px;
+    margin: 2px 2px 2px 0;
+  }
+
+  .card-answer-inner .note {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: var(--blue-light);
+    border-left: 3px solid var(--blue);
+    font-size: 13px;
+    color: var(--grey-800);
+  }
+  .card-answer-inner .note strong {
+    color: var(--blue);
+    font-weight: 600;
+  }
+
+  /* ── Hidden card ── */
+  .card.hidden { display: none; }
+
+  /* ── Footer ── */
+  .site-footer {
+    background: var(--black);
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-footer span {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--grey-400);
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 700px) {
+    .site-header, .hero, .filter-bar, .main, .site-footer { padding-left: 20px; padding-right: 20px; }
+    .opening-script { padding-left: 20px; padding-right: 20px; }
+    .hero h1 { font-size: 28px; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<section class="opening-script">
+  <p>"Hi, I'm Aries from DiGI-HandyMan — we're a digital solutions provider based in Taiwan, specializing in workflow automation and custom digital systems."</p>
+  <p>「我們幫企業做兩件事：一是把重複性的工作自動化，讓團隊不用再花時間處理；二是建立內部系統，讓資料跟流程可以真正被管理。今天 Demo 的就是其中一個自動化的應用——自動回覆系統。那我們直接來看。」</p>
+</section>
+
+<header class="site-header">
+  <div class="brand">Compass NY × DGHM</div>
+  <div class="tag">話術卡 / Talk Cards</div>
+</header>
+
+<div class="hero">
+  <h1>客戶可能提出的<br><em>問題與建議回答</em></h1>
+  <p>StreetEasy 自動回覆專案 — 內部對話準備文件 · 2026-04</p>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" data-cat="all">全部</button>
+  <button class="filter-btn" data-cat="security">🔒 資安 / 授權</button>
+  <button class="filter-btn" data-cat="cost">💰 費用 / 帳號</button>
+  <button class="filter-btn" data-cat="feature">⚙️ 功能 / 效果</button>
+  <button class="filter-btn" data-cat="timeline">📅 時程 / 流程</button>
+  <button class="filter-btn" data-cat="expand">🧩 擴充 / 邊界</button>
+</div>
+
+<main class="main">
+
+  <!-- 資安 -->
+  <div class="section-label" data-section="security">🔒 資安 / 授權</div>
+  <div class="cards-grid">
+
+    <div class="card" data-cat="security">
+      <div class="card-cat">資安 / 授權</div>
+      <div class="card-q">「授權之後，你們能看到我信箱裡所有的信嗎？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          不會。我們在授權前會先幫你設定一個專用標籤（Label），授權後系統只能看到這個標籤底下的信件——也就是 StreetEasy 寄來的那些。其他業務往來、合約、個人信件完全碰不到。
+          <div class="note"><strong>關鍵說法：</strong>Label 隔離是技術保護，不是承諾——授權範圍在系統架構層就已鎖定。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="security">
+      <div class="card-cat">資安 / 授權</div>
+      <div class="card-q">「Compass IT 不允許第三方工具連信箱怎麼辦？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          這個我們有備案。只要設一個獨立的轉信 Gmail，把 StreetEasy 的信轉寄過去，系統監控那個信箱就好，完全不碰 <span class="highlight">@compass.com</span> 信箱，IT 那邊也不會有問題。
+          <div class="note"><strong>說明重點：</strong>備案方案不會影響客戶日常作業，也不需要 IT 介入。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="security">
+      <div class="card-cat">資安 / 授權</div>
+      <div class="card-q">「如果我之後不想用了，怎麼取消授權？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          很簡單，到 Google 帳號設定頁找到對應的應用程式，點一下撤銷就完成了。不需要找我們，自己就能做。
+          <div class="note"><strong>入口網址：</strong><span class="highlight">myaccount.google.com/permissions</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="security">
+      <div class="card-cat">資安 / 授權</div>
+      <div class="card-q">「你們會不會把我的客戶資料存起來？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          不會。信件資料流過自動化系統後不會另外儲存，我們也不持有你的帳號密碼。整個帳號和設定都在你手上，我們只是幫你把流程建起來。
+          <div class="note"><strong>強調：</strong>帳號永遠歸客戶所有，我方以最小權限協作，建置完成可立即退出。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 費用 -->
+  <div class="section-label" data-section="cost">💰 費用 / 帳號</div>
+  <div class="cards-grid">
+
+    <div class="card" data-cat="cost">
+      <div class="card-cat">費用 / 帳號</div>
+      <div class="card-q">「這個工具是免費的嗎？後續有沒有月費？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          目前你們的業務量，免費方案就完全夠用了。如果以後詢問量大幅成長，升級方案的費用大概是每個月 $9 美金。這個帳號是你們自己的，我們不從中收取任何平台費用。
+          <div class="note"><strong>現況：</strong>每月約 20–25 封，免費方案上限 1,000 次 operations，非常充裕。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cost">
+      <div class="card-cat">費用 / 帳號</div>
+      <div class="card-q">「帳號要用我自己的名字還是你們的？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          帳號由你們自己註冊，綁定你們的付款方式。我們是以「協作者」身份受邀進入幫你建置，建置完成後可以直接退出，帳號完全是你們的。
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="cost">
+      <div class="card-cat">費用 / 帳號</div>
+      <div class="card-q">「之後如果你們不做了，我的系統還能用嗎？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          可以。所有設定都在你們的帳號裡，我們退出之後系統照常運作。交付時我們也會附上操作說明，你們自己就能維護基本的日常調整。
+          <div class="note"><strong>底線訊息：</strong>你們不依賴我們也能繼續跑。這是我們交付品質的一部分。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 功能 -->
+  <div class="section-label" data-section="feature">⚙️ 功能 / 效果</div>
+  <div class="cards-grid">
+
+    <div class="card" data-cat="feature">
+      <div class="card-cat">功能 / 效果</div>
+      <div class="card-q">「自動回覆會讓租客覺得不是真人嗎？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          我們在設計模板的時候會特別注意這一點——語氣自然、有溫度，不會像制式的機器人回覆。通常租客收到後不會特別感覺是自動化的，而且第一封回覆的目的是確認收到、引導對話，後續還是由你們親自跟進。
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="feature">
+      <div class="card-cat">功能 / 效果</div>
+      <div class="card-q">「每封信都會自動回嗎？還是可以選擇性觸發？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          系統只處理 StreetEasy 寄來的詢問信，其他信件完全不影響。如果你們有特殊需求（例如某類物件不要自動回），也可以透過條件設定來篩選。
+          <div class="note"><strong>觸發條件：</strong>寄件者 domain 為 <span class="highlight">email.streeteasy.com</span>，其他信件不會被碰。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="feature">
+      <div class="card-cat">功能 / 效果</div>
+      <div class="card-q">「如果多個 Agent 同時收到同一個詢問，會重複回覆嗎？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          不會。StreetEasy 只會把信寄給主責的那位 Agent，CC 的人不會觸發自動化，所以天生就不會有重複回覆的問題。
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="feature">
+      <div class="card-cat">功能 / 效果</div>
+      <div class="card-q">「我能自己改回覆內容嗎？不用每次都找你們？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          可以。交付的時候我們會附上一份操作說明，告訴你在哪裡改、怎麼改。模板欄位都有標示清楚，不需要任何技術背景就能自己調整文字。
+          <div class="note"><strong>獨立性：</strong>日常維護不需要找我們，這是我們交付的基本標準。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 時程 -->
+  <div class="section-label" data-section="timeline">📅 時程 / 流程</div>
+  <div class="cards-grid">
+
+    <div class="card" data-cat="timeline">
+      <div class="card-cat">時程 / 流程</div>
+      <div class="card-q">「多久可以完成？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          一般來說，從確認合約到系統上線大約 5 到 7 個工作天。主要的變數是 Gmail 授權那一步，只要你們這邊配合順利，通常不會拖太久。
+          <div class="note"><strong>時程關鍵：</strong>客戶完成帳號設定的速度，是整個流程最大的變數。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="timeline">
+      <div class="card-cat">時程 / 流程</div>
+      <div class="card-q">「我需要做哪些事？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          你們主要需要做三件事：註冊一個帳號、在 Gmail 裡設定一個標籤、然後點一下授權連結。我們會提供逐步的說明文件，照著做大概 15 到 20 分鐘可以完成。
+          <div class="note"><strong>三步驟：</strong><span class="highlight">① 註冊帳號</span> <span class="highlight">② 設定 Label</span> <span class="highlight">③ OAuth 授權</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="timeline">
+      <div class="card-cat">時程 / 流程</div>
+      <div class="card-q">「先付錢再做還是做完再付？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          我們的標準付款條件是簽約後先付 50% 訂金，系統驗收通過後再付尾款。這樣對雙方都有保障——你們確認做得到再付全款，我們也確保有基本保障才開始建置。
+          <div class="note"><strong>付款結構：</strong><span class="highlight">50% 簽約後</span> + <span class="highlight">50% 驗收後</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 擴充 -->
+  <div class="section-label" data-section="expand">🧩 擴充 / 邊界</div>
+  <div class="cards-grid">
+
+    <div class="card" data-cat="expand">
+      <div class="card-cat">擴充 / 邊界</div>
+      <div class="card-q">「買賣詢問信也可以自動化嗎？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          可以，邏輯上是一樣的，加一條處理路徑就能做到。這部分我們可以在目前的專案完成、確認運作穩定之後再來評估，屬於擴充項目，費用另計。
+          <div class="note"><strong>策略：</strong>先跑穩租賃自動化，再擴充買賣，避免一次做太多增加複雜度。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="expand">
+      <div class="card-cat">擴充 / 邊界</div>
+      <div class="card-q">「以後能接 CRM 嗎？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          可以評估。這套系統的架構本來就是模組化的，未來要串接 CRM 是做得到的。等這個自動回覆跑穩了，我們可以再討論下一步要加什麼。
+        </div>
+      </div>
+    </div>
+
+    <div class="card" data-cat="expand">
+      <div class="card-cat">擴充 / 邊界</div>
+      <div class="card-q">「Google Sheets 記錄查詢紀錄可以做嗎？」</div>
+      <div class="card-toggle"></div>
+      <div class="card-answer">
+        <div class="card-answer-inner">
+          可以，這是我們原本就有規劃的選配功能。每次有新詢問進來，系統可以同步把租客資料、物件地址、時間等資訊記錄到一張試算表，方便你們追蹤和統計。這部分可以在確認需求後一起納入報價。
+          <div class="note"><strong>選配說明：</strong>屬於 Phase 2 擴充，基礎自動回覆不含此項，需另行確認。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <span>DiGi-HandyMan LTD. × Compass NY / The David Chang Team</span>
+  <span>Internal Use Only · 2026-04</span>
+</footer>
+
+<script>
+  // Toggle cards
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+      const isOpen = card.classList.contains('open');
+      // Close all in same grid
+      card.closest('.cards-grid').querySelectorAll('.card.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    });
+  });
+
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+
+      document.querySelectorAll('.card').forEach(card => {
+        if (cat === 'all' || card.dataset.cat === cat) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+          card.classList.remove('open');
+        }
+      });
+
+      // Show/hide section labels
+      document.querySelectorAll('.section-label').forEach(label => {
+        if (cat === 'all') {
+          label.style.display = '';
+        } else {
+          label.style.display = label.dataset.section === cat ? '' : 'none';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

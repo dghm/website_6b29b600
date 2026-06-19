@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>配色方案預覽 — 萬能數維</title>
+  <link href="https://fonts.googleapis.com/css2?family=K2D:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'K2D', 'Noto Sans TC', sans-serif;
+      background: #eef0f4;
+      padding: 2rem 1rem 4rem;
+      color: #1e1e1e;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+    .page-subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 3rem;
+    }
+
+    /* ── Grid layout ── */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      .palette-grid { grid-template-columns: 1fr; max-width: 520px; }
+    }
+
+    /* ── Palette card wrapper ── */
+    .palette-card {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      background: #fff;
+    }
+    .palette-label {
+      background: #1e1e1e;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.5rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .palette-label .badge {
+      font-size: 0.62rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── PALETTE A: 深海軍藍 + 冷金 ─── */
+    .a-primary   { --p: #0f2d5e; --a: #c9a227; --bg: #f5f7fc; --t: #0f2d5e; --muted: #5a6a82; }
+    /* ─── PALETTE B: 深藍 + 科技青 ─── */
+    .b-primary   { --p: #1a3a5c; --a: #0096c7; --bg: #f2f7fb; --t: #1a3a5c; --muted: #4a6070; }
+    /* ─── PALETTE C: 石板藍 + 深橘 ─── */
+    .c-primary   { --p: #2c3e60; --a: #e07b39; --bg: #f5f6f8; --t: #2c3e60; --muted: #556070; }
+
+    /* ── Mini Header ── */
+    .mini-header {
+      background: #fff;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #eee;
+    }
+    .mini-brand-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--p);
+    }
+    .mini-brand-tagline {
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+    .mini-nav {
+      display: flex;
+      gap: 1rem;
+    }
+    .mini-nav a {
+      font-size: 0.62rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .mini-nav a:hover { color: var(--p); }
+
+    /* ── Mini Hero ── */
+    .mini-hero {
+      background: var(--bg);
+      padding: 2rem 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .mini-hero-text { flex: 1; }
+    .mini-tagline {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--p);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .mini-headline {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--t);
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
+    .mini-desc {
+      font-size: 0.62rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0.85rem;
+    }
+    .mini-btn {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      background: var(--a);
+      color: #fff;
+      border-radius: 5px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      cursor: default;
+    }
+    /* Gold button — text needs to be dark */
+    .a-primary .mini-btn { color: #1a1a1a; }
+
+    /* ── Metric Card ── */
+    .mini-metric {
+      background: #fff;
+      border: 1px solid #e4e9f5;
+      border-radius: 12px;
+      padding: 1rem 0.85rem;
+      text-align: center;
+      min-width: 120px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    }
+    .mini-metric-tag {
+      display: inline-block;
+      background: var(--p);
+      color: #fff;
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 0.18rem 0.5rem;
+      border-radius: 100px;
+      margin-bottom: 0.7rem;
+    }
+    .mini-metric-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .mini-num-before {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ccc;
+      line-height: 1;
+    }
+    .mini-num-after {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--p);
+      line-height: 1;
+    }
+    .mini-arrow {
+      font-size: 1rem;
+      color: var(--a);
+      font-weight: 700;
+    }
+    .mini-unit { font-size: 0.55rem; color: #999; }
+    .mini-metric-desc {
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: #333;
+      margin-top: 0.3rem;
+    }
+    .mini-metric-src {
+      font-size: 0.5rem;
+      color: #bbb;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Services strip ── */
+    .mini-services {
+      padding: 1.5rem 1.5rem 0;
+    }
+    .mini-section-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--p);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .mini-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--t);
+      margin-bottom: 1rem;
+    }
+    .mini-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+    .mini-card {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 0.75rem;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .mini-card-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--p);
+      border-radius: 6px;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mini-card-icon svg { color: #fff; }
+    .mini-card-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--t);
+      margin-bottom: 0.25rem;
+    }
+    .mini-card-desc {
+      font-size: 0.56rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── CTA strip ── */
+    .mini-cta {
+      background: var(--p);
+      padding: 1.25rem 1.5rem;
+      margin-top: 1.25rem;
+      text-align: center;
+    }
+    .mini-cta-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+    .mini-cta-desc {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.75rem;
+    }
+    .mini-cta-btn {
+      display: inline-block;
+      padding: 0.4rem 1.25rem;
+      background: var(--a);
+      color: #fff;
+      border-radius: 5px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      cursor: default;
+    }
+    .a-primary .mini-cta-btn { color: #1a1a1a; }
+
+    /* ── Palette strip (color tokens) ── */
+    .color-strip {
+      display: flex;
+      height: 6px;
+    }
+    .cs-primary { background: var(--p); flex: 3; }
+    .cs-accent  { background: var(--a); flex: 1; }
+    .cs-bg      { background: var(--bg); flex: 1; border-left: 1px solid #ddd; }
+
+    /* ── Swatch row ── */
+    .swatch-row {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      background: #fafafa;
+      border-top: 1px solid #eee;
+      align-items: center;
+    }
+    .swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+    .swatch-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .swatch-name {
+      font-size: 0.58rem;
+      font-weight: 600;
+      color: #555;
+    }
+    .swatch-hex {
+      font-size: 0.55rem;
+      color: #aaa;
+      font-family: monospace;
+    }
+    .swatch-pair {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .swatch-sep {
+      font-size: 0.6rem;
+      color: #ccc;
+    }
+
+    /* ── Annotation ── */
+    .palette-note {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.62rem;
+      color: #777;
+      line-height: 1.6;
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+    .palette-note strong { color: #333; }
+  </style>
+</head>
+<body>
+  <h1>配色方案預覽</h1>
+  <p class="page-subtitle">顧問感 × 數位專業 ── 三組方向對比，選出最適合你的調性</p>
+
+  <div class="palette-grid">
+
+    <!-- ══ PALETTE A ══ -->
+    <div class="palette-card a-primary">
+      <div class="palette-label">
+        方案 A
+        <span class="badge" style="background:#c9a227;color:#1a1a1a;">深海軍藍 × 冷金</span>
+      </div>
+      <div class="color-strip">
+        <div class="cs-primary"></div>
+        <div class="cs-accent"></div>
+        <div class="cs-bg"></div>
+      </div>
+
+      <!-- Header -->
+      <div class="mini-header">
+        <div>
+          <div class="mini-brand-name">萬能數維有限公司</div>
+          <div class="mini-brand-tagline">診斷先行，系統落地，效率可見</div>
+        </div>
+        <nav class="mini-nav">
+          <a href="#">服務項目</a><a href="#">案例分享</a><a href="#">與我聯繫</a>
+        </nav>
+      </div>
+
+      <!-- Hero -->
+      <div class="mini-hero">
+        <div class="mini-hero-text">
+          <div class="mini-tagline">先診斷・再設計・讓效率說話</div>
+          <div class="mini-headline">你說需要新網站，我幫你找到真正的問題</div>
+          <div class="mini-desc">透過深入訪談與流程梳理，找出企業真正的痛點，再用客製化的數位系統解決它。</div>
+          <a class="mini-btn">與我聯繫</a>
+        </div>
+        <div class="mini-metric">
+          <div class="mini-metric-tag">真實客戶成效</div>
+          <div class="mini-metric-row">
+            <div><div class="mini-num-before">15</div><div class="mini-unit">分鐘</div></div>
+            <div class="mini-arrow">→</div>
+            <div><div class="mini-num-after">3</div><div class="mini-unit">分鐘內</div></div>
+          </div>
+          <div class="mini-metric-desc">文件作業時間大幅縮短</div>
+          <div class="mini-metric-src">— TailorMed 系統導入後</div>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="mini-services">
+        <div class="mini-section-label">服務項目</div>
+        <div class="mini-section-title">從入口到核心，一路陪你走</div>
+        <div class="mini-cards">
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><rect x="4" y="8" width="36" height="24" rx="3" stroke="currentColor" stroke-width="3"/><path d="M16 32v8M10 40h24" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="mini-card-title">品牌設計與網站建置</div>
+            <div class="mini-card-desc">打造具識別性的品牌形象與現代化企業網站</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><circle cx="22" cy="22" r="14" stroke="currentColor" stroke-width="3"/><path d="M32 32l12 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="mini-card-title">作業流程診斷</div>
+            <div class="mini-card-desc">梳理真實作業環境，找出效率瓶頸</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><ellipse cx="26" cy="12" rx="18" ry="6" stroke="currentColor" stroke-width="3"/><path d="M8 12v12c0 3.3 8.1 6 18 6s18-2.7 18-6V12" stroke="currentColor" stroke-width="3"/><path d="M8 24v12c0 3.3 8.1 6 18 6s18-2.7 18-6V24" stroke="currentColor" stroke-width="3"/></svg></div>
+            <div class="mini-card-title">客製化系統建置</div>
+            <div class="mini-card-desc">建立可負擔、可客製的企業資料庫系統</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><path d="M6 38l12-14 10 8 10-18 8-6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="mini-card-title">數位化顧問陪跑</div>
+            <div class="mini-card-desc">月費制持續優化作業流程</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mini-cta">
+        <div class="mini-cta-title">讓我們先聊聊你的狀況</div>
+        <div class="mini-cta-desc">不確定需要什麼也沒關係——從一次對話開始</div>
+        <div class="mini-cta-btn">與我聯繫</div>
+      </div>
+
+      <!-- Swatches -->
+      <div class="swatch-row">
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#0f2d5e"></div>
+          <div class="swatch-info"><span class="swatch-name">主色</span><span class="swatch-hex">#0f2d5e</span></div>
+        </div>
+        <div class="swatch-sep">／</div>
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#c9a227"></div>
+          <div class="swatch-info"><span class="swatch-name">強調色</span><span class="swatch-hex">#c9a227</span></div>
+        </div>
+        <div class="swatch-sep">／</div>
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#f5f7fc;border:1px solid #ddd"></div>
+          <div class="swatch-info"><span class="swatch-name">背景色</span><span class="swatch-hex">#f5f7fc</span></div>
+        </div>
+      </div>
+      <div class="palette-note"><strong>調性：</strong>最穩重沉著，接近傳統大型顧問公司（安侯建業、德勤）。金色強調帶出「價值感」而非「活潑感」。傳統產業客戶接受度最高，但相對保守。</div>
+    </div>
+
+    <!-- ══ PALETTE B ══ -->
+    <div class="palette-card b-primary">
+      <div class="palette-label">
+        方案 B
+        <span class="badge" style="background:#0096c7;color:#fff;">深藍 × 科技青</span>
+      </div>
+      <div class="color-strip">
+        <div class="cs-primary"></div>
+        <div class="cs-accent"></div>
+        <div class="cs-bg"></div>
+      </div>
+
+      <div class="mini-header">
+        <div>
+          <div class="mini-brand-name">萬能數維有限公司</div>
+          <div class="mini-brand-tagline">診斷先行，系統落地，效率可見</div>
+        </div>
+        <nav class="mini-nav">
+          <a href="#">服務項目</a><a href="#">案例分享</a><a href="#">與我聯繫</a>
+        </nav>
+      </div>
+
+      <div class="mini-hero">
+        <div class="mini-hero-text">
+          <div class="mini-tagline">先診斷・再設計・讓效率說話</div>
+          <div class="mini-headline">你說需要新網站，我幫你找到真正的問題</div>
+          <div class="mini-desc">透過深入訪談與流程梳理，找出企業真正的痛點，再用客製化的數位系統解決它。</div>
+          <a class="mini-btn">與我聯繫</a>
+        </div>
+        <div class="mini-metric">
+          <div class="mini-metric-tag">真實客戶成效</div>
+          <div class="mini-metric-row">
+            <div><div class="mini-num-before">15</div><div class="mini-unit">分鐘</div></div>
+            <div class="mini-arrow">→</div>
+            <div><div class="mini-num-after">3</div><div class="mini-unit">分鐘內</div></div>
+          </div>
+          <div class="mini-metric-desc">文件作業時間大幅縮短</div>
+          <div class="mini-metric-src">— TailorMed 系統導入後</div>
+        </div>
+      </div>
+
+      <div class="mini-services">
+        <div class="mini-section-label">服務項目</div>
+        <div class="mini-section-title">從入口到核心，一路陪你走</div>
+        <div class="mini-cards">
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><rect x="4" y="8" width="36" height="24" rx="3" stroke="currentColor" stroke-width="3"/><path d="M16 32v8M10 40h24" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="mini-card-title">品牌設計與網站建置</div>
+            <div class="mini-card-desc">打造具識別性的品牌形象與現代化企業網站</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><circle cx="22" cy="22" r="14" stroke="currentColor" stroke-width="3"/><path d="M32 32l12 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="mini-card-title">作業流程診斷</div>
+            <div class="mini-card-desc">梳理真實作業環境，找出效率瓶頸</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><ellipse cx="26" cy="12" rx="18" ry="6" stroke="currentColor" stroke-width="3"/><path d="M8 12v12c0 3.3 8.1 6 18 6s18-2.7 18-6V12" stroke="currentColor" stroke-width="3"/><path d="M8 24v12c0 3.3 8.1 6 18 6s18-2.7 18-6V24" stroke="currentColor" stroke-width="3"/></svg></div>
+            <div class="mini-card-title">客製化系統建置</div>
+            <div class="mini-card-desc">建立可負擔、可客製的企業資料庫系統</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><path d="M6 38l12-14 10 8 10-18 8-6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="mini-card-title">數位化顧問陪跑</div>
+            <div class="mini-card-desc">月費制持續優化作業流程</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-cta">
+        <div class="mini-cta-title">讓我們先聊聊你的狀況</div>
+        <div class="mini-cta-desc">不確定需要什麼也沒關係——從一次對話開始</div>
+        <div class="mini-cta-btn">與我聯繫</div>
+      </div>
+
+      <div class="swatch-row">
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#1a3a5c"></div>
+          <div class="swatch-info"><span class="swatch-name">主色</span><span class="swatch-hex">#1a3a5c</span></div>
+        </div>
+        <div class="swatch-sep">／</div>
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#0096c7"></div>
+          <div class="swatch-info"><span class="swatch-name">強調色</span><span class="swatch-hex">#0096c7</span></div>
+        </div>
+        <div class="swatch-sep">／</div>
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#f2f7fb;border:1px solid #ddd"></div>
+          <div class="swatch-info"><span class="swatch-name">背景色</span><span class="swatch-hex">#f2f7fb</span></div>
+        </div>
+      </div>
+      <div class="palette-note"><strong>調性：</strong>顧問穩重感 + 科技數位感的最佳平衡點。深藍底帶來信任感，科技青強調色傳遞「數位化、現代、資料導向」。適合同時要拿品牌網站設計案與系統建置案的定位。</div>
+    </div>
+
+    <!-- ══ PALETTE C ══ -->
+    <div class="palette-card c-primary">
+      <div class="palette-label">
+        方案 C
+        <span class="badge" style="background:#e07b39;color:#fff;">石板藍 × 深橘</span>
+      </div>
+      <div class="color-strip">
+        <div class="cs-primary"></div>
+        <div class="cs-accent"></div>
+        <div class="cs-bg"></div>
+      </div>
+
+      <div class="mini-header">
+        <div>
+          <div class="mini-brand-name">萬能數維有限公司</div>
+          <div class="mini-brand-tagline">診斷先行，系統落地，效率可見</div>
+        </div>
+        <nav class="mini-nav">
+          <a href="#">服務項目</a><a href="#">案例分享</a><a href="#">與我聯繫</a>
+        </nav>
+      </div>
+
+      <div class="mini-hero">
+        <div class="mini-hero-text">
+          <div class="mini-tagline">先診斷・再設計・讓效率說話</div>
+          <div class="mini-headline">你說需要新網站，我幫你找到真正的問題</div>
+          <div class="mini-desc">透過深入訪談與流程梳理，找出企業真正的痛點，再用客製化的數位系統解決它。</div>
+          <a class="mini-btn">與我聯繫</a>
+        </div>
+        <div class="mini-metric">
+          <div class="mini-metric-tag">真實客戶成效</div>
+          <div class="mini-metric-row">
+            <div><div class="mini-num-before">15</div><div class="mini-unit">分鐘</div></div>
+            <div class="mini-arrow">→</div>
+            <div><div class="mini-num-after">3</div><div class="mini-unit">分鐘內</div></div>
+          </div>
+          <div class="mini-metric-desc">文件作業時間大幅縮短</div>
+          <div class="mini-metric-src">— TailorMed 系統導入後</div>
+        </div>
+      </div>
+
+      <div class="mini-services">
+        <div class="mini-section-label">服務項目</div>
+        <div class="mini-section-title">從入口到核心，一路陪你走</div>
+        <div class="mini-cards">
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><rect x="4" y="8" width="36" height="24" rx="3" stroke="currentColor" stroke-width="3"/><path d="M16 32v8M10 40h24" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="mini-card-title">品牌設計與網站建置</div>
+            <div class="mini-card-desc">打造具識別性的品牌形象與現代化企業網站</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><circle cx="22" cy="22" r="14" stroke="currentColor" stroke-width="3"/><path d="M32 32l12 12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="mini-card-title">作業流程診斷</div>
+            <div class="mini-card-desc">梳理真實作業環境，找出效率瓶頸</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><ellipse cx="26" cy="12" rx="18" ry="6" stroke="currentColor" stroke-width="3"/><path d="M8 12v12c0 3.3 8.1 6 18 6s18-2.7 18-6V12" stroke="currentColor" stroke-width="3"/><path d="M8 24v12c0 3.3 8.1 6 18 6s18-2.7 18-6V24" stroke="currentColor" stroke-width="3"/></svg></div>
+            <div class="mini-card-title">客製化系統建置</div>
+            <div class="mini-card-desc">建立可負擔、可客製的企業資料庫系統</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon"><svg width="14" height="14" viewBox="0 0 52 52" fill="none"><path d="M6 38l12-14 10 8 10-18 8-6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="mini-card-title">數位化顧問陪跑</div>
+            <div class="mini-card-desc">月費制持續優化作業流程</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-cta">
+        <div class="mini-cta-title">讓我們先聊聊你的狀況</div>
+        <div class="mini-cta-desc">不確定需要什麼也沒關係——從一次對話開始</div>
+        <div class="mini-cta-btn">與我聯繫</div>
+      </div>
+
+      <div class="swatch-row">
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#2c3e60"></div>
+          <div class="swatch-info"><span class="swatch-name">主色</span><span class="swatch-hex">#2c3e60</span></div>
+        </div>
+        <div class="swatch-sep">／</div>
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#e07b39"></div>
+          <div class="swatch-info"><span class="swatch-name">強調色</span><span class="swatch-hex">#e07b39</span></div>
+        </div>
+        <div class="swatch-sep">／</div>
+        <div class="swatch-pair">
+          <div class="swatch" style="background:#f5f6f8;border:1px solid #ddd"></div>
+          <div class="swatch-info"><span class="swatch-name">背景色</span><span class="swatch-hex">#f5f6f8</span></div>
+        </div>
+      </div>
+      <div class="palette-note"><strong>調性：</strong>低飽和石板藍帶來沉穩感，深橘強調色注入溫度與行動力。接近 Accenture、Thoughtworks 等科技顧問公司的風格。在三組中最有「人味」，也最容易讓傳統產業感受到親近感而非距離感。</div>
+    </div>
+
+  </div>
+
+  <p style="text-align:center;margin-top:2.5rem;font-size:0.75rem;color:#aaa;">選定方案後告訴我，直接套用到 index.html 與 main.css</p>
+</body>
+</html>

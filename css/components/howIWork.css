@@ -1,0 +1,118 @@
+.how-i-work-section {
+  padding: 5rem 0;
+  background-image: url("../images/section-bg4-1024x570.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+respond(tablet)
+respond(mobile)
+}
+.how-i-work-header {
+  text-align: center;
+  margin-bottom: 4rem;
+respond(tablet)
+respond(mobile)
+}
+.how-i-work-tagline {
+  font-size: 1rem;
+  font-weight: 600;
+  color: primary-color;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+respond(tablet)
+respond(mobile)
+}
+.how-i-work-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: neutral-dark;
+  line-height: 1.2;
+  margin: 0 0 1.5rem 0;
+respond(laptop)
+respond(tablet)
+respond(mobile)
+}
+.how-i-work-description {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: neutral-gray;
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 700px;
+respond(tablet)
+respond(mobile)
+}
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  align-items: start;
+respond(laptop)
+respond(tablet)
+respond(mobile)
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+.step-item:last-child .step-arrow {
+  display: none;
+}
+.step-icon {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  background-color: base-white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+respond(tablet)
+respond(mobile)
+}
+.step-icon img {
+  max-width: 70%;
+  max-height: 70%;
+  height: auto;
+  object-fit: contain;
+}
+.step-item:hover .step-icon {
+  transform: scale(1.1);
+}
+.step-arrow {
+  position: absolute;
+  top: 50px;
+  right: -20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+respond(tablet)
+respond(mobile)
+}
+.step-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: primary-color;
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+respond(tablet)
+respond(mobile)
+}
+.step-description {
+  font-size: 1rem;
+  font-weight: 400;
+  color: neutral-gray;
+  line-height: 1.6;
+  margin: 0;
+respond(tablet)
+respond(mobile)
+}

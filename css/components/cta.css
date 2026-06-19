@@ -1,0 +1,87 @@
+.cta-section {
+  padding: 5rem 0;
+  background-image: url("../images/section-bg6.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+respond(tablet)
+respond(mobile)
+}
+.cta-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+respond(laptop)
+respond(tablet)
+respond(mobile)
+}
+.cta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+respond(tablet)
+respond(mobile)
+}
+.cta-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: base-white;
+  line-height: 1.2;
+  margin: 0;
+respond(laptop)
+respond(tablet)
+respond(mobile)
+}
+.cta-description {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.7;
+  margin: 0;
+  max-width: 500px;
+respond(tablet)
+respond(mobile)
+}
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: accent-color;
+  color: #000;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+respond(tablet)
+respond(mobile)
+}
+.cta-button:hover {
+  background-color: primary-color;
+  color: #fff;
+  transform: translateY(-2px);
+}
+.cta-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(254,198,41,0.3);
+}
+.cta-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+respond(tablet)
+}
+.cta-illustration {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+respond(tablet)
+respond(mobile)
+}

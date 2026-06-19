@@ -1,0 +1,108 @@
+.services-section {
+  padding: 5rem 0;
+  background-image: url("../images/section-bg2-1024x570.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+respond(tablet)
+respond(mobile)
+}
+.services-header {
+  text-align: center;
+  margin-bottom: 4rem;
+respond(tablet)
+respond(mobile)
+}
+.services-tagline {
+  font-size: 1rem;
+  font-weight: 600;
+  color: primary-color;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+respond(tablet)
+respond(mobile)
+}
+.services-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: neutral-dark;
+  line-height: 1.2;
+  margin: 0 0 1.5rem 0;
+respond(laptop)
+respond(tablet)
+respond(mobile)
+}
+.services-description {
+  font-size: 1.125rem;
+  font-weight: 400;
+  color: neutral-gray;
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 700px;
+respond(tablet)
+respond(mobile)
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+respond(laptop)
+respond(tablet)
+respond(mobile)
+}
+.service-card {
+  background-color: base-white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+respond(tablet)
+respond(mobile)
+}
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-color: primary-color;
+}
+.service-card-highlight {
+  background-color: #faf9f7;
+}
+.service-card-highlight:hover {
+  background-color: #f5f3f0;
+}
+.service-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  height: 80px;
+respond(tablet)
+respond(mobile)
+}
+.service-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.service-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: primary-color;
+  margin: 0 0 1rem 0;
+  line-height: 1.3;
+respond(tablet)
+respond(mobile)
+}
+.service-card-description {
+  font-size: 1rem;
+  font-weight: 400;
+  color: neutral-gray;
+  line-height: 1.6;
+  margin: 0;
+respond(tablet)
+respond(mobile)
+}
