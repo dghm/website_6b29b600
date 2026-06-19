@@ -1,0 +1,21 @@
+#!/bin/bash
+# demo.dghm.tw 部署設定範本
+#
+# 使用方式：
+#   1. 複製這個檔案為 deploy.local.sh（同目錄下）
+#      cp deploy.local.sh.example deploy.local.sh
+#   2. 填入下面的 FTP 帳密
+#   3. chmod 600 deploy.local.sh（避免其他使用者讀到密碼）
+#   4. 執行 ./deploy.sh 進行上傳
+#
+# deploy.local.sh 含密碼，請勿上傳、commit 或分享給任何人（包括 Claude）。
+
+# Bluehost FTP 主機
+FTP_HOST="ftp.dghm.tw"
+
+# FTP 帳號 / 密碼（在 cPanel → FTP Accounts 建立，Directory 指定為 demo.dghm.tw）
+FTP_USER="demo@dghm.tw"
+FTP_PASS="你的FTP密碼"
+
+# 遠端目錄：FTP 帳號若已用 Directory 鎖在 demo.dghm.tw，登入後即在該目錄根目錄，填 "/" 即可
+REMOTE_DIR="/"
