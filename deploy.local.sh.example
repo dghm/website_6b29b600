@@ -1,0 +1,19 @@
+#!/bin/bash
+# dghm.tw 主網站部署設定範本
+#
+# 使用方式：
+#   1. 複製這個檔案為 deploy.local.sh（同目錄下）
+#      cp deploy.local.sh.example deploy.local.sh
+#   2. 填入下面的 FTP 密碼
+#   3. chmod 600 deploy.local.sh（避免其他使用者讀到密碼）
+#   4. 執行 ./deploy.sh 進行上傳
+#
+# deploy.local.sh 含密碼，請勿上傳、commit 或分享給任何人（包括 Claude）。
+
+FTP_HOST="ftp.zjq.afh.mybluehost.me"
+FTP_USER="www@dghm.tw"
+FTP_PASS="你的FTP密碼"
+
+# 遠端目錄：登入後即在網站根目錄（對照 apt/HANDOFF.md 的說法，通常填 "/" 即可）
+# 若上傳後發現跑到錯的層級，用 FTP 軟體（FileZilla/Cyberduck）登入看一下實際根目錄再調整
+REMOTE_DIR="/"
