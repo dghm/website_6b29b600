@@ -2,3 +2,4 @@
 __MACOSX/
 *.zip
 deploy.local.sh
+dghm-config.php

@@ -1,0 +1,20 @@
+<?php
+// ============================================================
+// DGHM Contact Form - SMTP Configuration (template)
+//
+// 使用方式：
+//   1. 複製為 dghm-config.php（同目錄下）
+//      cp dghm-config.php.example dghm-config.php
+//   2. 填入真實的 Gmail App Password
+//   3. 上傳到 Bluehost 網站根目錄（與 form-handler.php 同層）
+//
+// dghm-config.php 含密碼，請勿上傳、commit 或分享給任何人（包括 Claude）。
+// ============================================================
+
+define('SMTP_HOST',      'smtp.gmail.com');
+define('SMTP_PORT',      587);
+define('SMTP_USER',      'help@dghm.tw');
+define('SMTP_PASS',      '你的16位元App Password');
+define('SMTP_FROM',      'help@dghm.tw');
+define('SMTP_FROM_NAME', 'DGHM Website');
+define('MAIL_TO',        'help@dghm.tw');
