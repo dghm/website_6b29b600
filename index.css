@@ -115,9 +115,29 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 64px 80px 60px;
+  align-items: flex-end;
+  padding: 80px 0;
   position: relative;
   overflow: hidden;
+}
+
+.hero-left-inner {
+  width: 100%;
+  max-width: 720px;
+  padding: 0 64px 0 60px;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.hero-right-inner {
+  width: 100%;
+  max-width: 720px;
+  padding: 80px 60px 80px 64px;
 }
 
 /* subtle grid texture */
@@ -212,7 +232,8 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 60px 80px 64px;
+  align-items: flex-start;
+  padding: 0;
 }
 
 .hero-stat-label {
@@ -468,6 +489,12 @@ section { padding: 100px 60px; }
   padding: 100px 60px;
 }
 
+.case-carousel-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+}
+
 .case-inner {
   max-width: 1100px; margin: 0 auto;
   display: grid;
@@ -557,9 +584,6 @@ section { padding: 100px 60px; }
 }
 
 /* ── CASE CAROUSEL ── */
-.case-carousel-wrap {
-  position: relative;
-}
 
 .case-slide {
   display: none;
