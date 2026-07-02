@@ -171,42 +171,100 @@
 
 <!-- CASE -->
 <section id="case">
-  <div class="case-inner">
-    <div class="case-content">
-      <p class="case-label">Case Study</p>
-      <h2 class="case-title">TailorMed<br>International Courier</h2>
-      <p class="case-desc">
-        A growing international courier company hitting the ceiling of spreadsheet-based operations. As order volume increased, information fragmentation, recurring document errors, and manual double-checking were costing the team hours every week.
-        We audited the full operation and built an integrated CRM / OMS / FIN system across three modules — consolidating every data flow they needed to run the business.
-      </p>
-      <div>
-        <span class="case-tag">CRM</span>
-        <span class="case-tag">Order Management</span>
-        <span class="case-tag">Finance Module</span>
-        <span class="case-tag">Airtable Interface</span>
-        <span class="case-tag">Automation</span>
+  <div class="case-carousel-wrap">
+
+    <!-- Slide 1: TailorMed -->
+    <div class="case-slide active">
+      <div class="case-inner">
+        <div class="case-content">
+          <p class="case-label">Case Study</p>
+          <h2 class="case-title">TailorMed<br>International Courier</h2>
+          <p class="case-desc">
+            A growing international courier company hitting the ceiling of spreadsheet-based operations. As order volume increased, information fragmentation, recurring document errors, and manual double-checking were costing the team hours every week.
+            We audited the full operation and built an integrated CRM / OMS / FIN system across three modules — consolidating every data flow they needed to run the business.
+          </p>
+          <div>
+            <span class="case-tag">CRM</span>
+            <span class="case-tag">Order Management</span>
+            <span class="case-tag">Finance Module</span>
+            <span class="case-tag">Airtable Interface</span>
+            <span class="case-tag">Automation</span>
+          </div>
+        </div>
+        <div class="case-metrics">
+          <div class="metric">
+            <div class="metric-num">
+              <img class="metric-icon" src="./Case-01.svg" alt="Three integrated modules" width="72" height="72" decoding="async">
+            </div>
+            <div class="metric-label">Core system modules integrated (CRM / OMS / FIN)</div>
+          </div>
+          <div class="metric">
+            <div class="metric-num">
+              <img class="metric-icon" src="./Case-02.svg" alt="Reduced errors and re-checking" width="72" height="72" decoding="async">
+            </div>
+            <div class="metric-label">Document errors and manual re-checking significantly reduced</div>
+          </div>
+          <div class="metric">
+            <div class="metric-num">
+              <img class="metric-icon" src="./Case-03.svg" alt="Scalable architecture" width="72" height="72" decoding="async">
+            </div>
+            <div class="metric-label">Architecture that scales with order volume — no rebuild needed</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="case-metrics">
-      <div class="metric">
-        <div class="metric-num">
-          <img class="metric-icon" src="./Case-01.svg" alt="Three integrated modules" width="72" height="72" decoding="async">
+
+    <!-- Slide 2: Compass -->
+    <div class="case-slide">
+      <div class="case-inner">
+        <div class="case-content">
+          <p class="case-label">Case Study</p>
+          <h2 class="case-title">Compass<br>Real Estate Team</h2>
+          <p class="case-desc">
+            A busy real estate team managing high volumes of StreetEasy inquiries manually — copying lead details, composing individual replies, and tracking follow-ups across scattered inboxes.
+            We built an automated lead-response system that captures every inquiry, routes it to the right agent, and sends a branded reply within seconds — no manual input required.
+          </p>
+          <div>
+            <span class="case-tag">Lead Automation</span>
+            <span class="case-tag">Email Integration</span>
+            <span class="case-tag">Make.com</span>
+            <span class="case-tag">StreetEasy</span>
+            <span class="case-tag">Workflow Design</span>
+          </div>
         </div>
-        <div class="metric-label">Core system modules integrated (CRM / OMS / FIN)</div>
-      </div>
-      <div class="metric">
-        <div class="metric-num">
-          <img class="metric-icon" src="./Case-02.svg" alt="Reduced errors and re-checking" width="72" height="72" decoding="async">
+        <div class="case-metrics">
+          <div class="metric">
+            <div class="metric-num">
+              <img class="metric-icon" src="./Case-01.svg" alt="Instant response" width="72" height="72" decoding="async">
+            </div>
+            <div class="metric-label">Inquiry-to-response time reduced from hours to seconds</div>
+          </div>
+          <div class="metric">
+            <div class="metric-num">
+              <img class="metric-icon" src="./Case-02.svg" alt="Zero manual routing" width="72" height="72" decoding="async">
+            </div>
+            <div class="metric-label">Lead routing and reply fully automated — zero manual steps</div>
+          </div>
+          <div class="metric">
+            <div class="metric-num">
+              <img class="metric-icon" src="./Case-03.svg" alt="Scalable system" width="72" height="72" decoding="async">
+            </div>
+            <div class="metric-label">System scales across multiple agents and listing platforms</div>
+          </div>
         </div>
-        <div class="metric-label">Document errors and manual re-checking significantly reduced</div>
-      </div>
-      <div class="metric">
-        <div class="metric-num">
-          <img class="metric-icon" src="./Case-03.svg" alt="Scalable architecture" width="72" height="72" decoding="async">
-        </div>
-        <div class="metric-label">Architecture that scales with order volume — no rebuild needed</div>
       </div>
     </div>
+
+    <!-- Controls -->
+    <div class="case-controls">
+      <button class="case-arrow" id="casePrev" aria-label="Previous case">&#8592;</button>
+      <div class="case-dots">
+        <span class="case-dot active" data-index="0"></span>
+        <span class="case-dot" data-index="1"></span>
+      </div>
+      <button class="case-arrow" id="caseNext" aria-label="Next case">&#8594;</button>
+    </div>
+
   </div>
 </section>
 

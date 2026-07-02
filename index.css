@@ -547,6 +547,71 @@ section { padding: 100px 60px; }
   font-weight: 300;
 }
 
+/* ── CASE CAROUSEL ── */
+.case-carousel-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.case-slide {
+  display: none;
+  animation: caseFadeIn 0.4s ease;
+}
+
+.case-slide.active {
+  display: block;
+}
+
+@keyframes caseFadeIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.case-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 32px 0 8px;
+}
+
+.case-arrow {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.6);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  line-height: 1;
+}
+
+.case-arrow:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.case-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.case-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.case-dot.active {
+  background: var(--orange);
+  transform: scale(1.3);
+}
+
 /* ── CTA ── */
 #contact {
   background: var(--bg);

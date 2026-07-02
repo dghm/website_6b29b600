@@ -84,3 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+// ── Case Study Carousel ──────────────────────────────────────
+(function () {
+  const slides = document.querySelectorAll('.case-slide');
+  const dots   = document.querySelectorAll('.case-dot');
+  let current  = 0;
+
+  function goTo(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (index + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  document.getElementById('casePrev').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('caseNext').addEventListener('click', () => goTo(current + 1));
+  dots.forEach(dot => dot.addEventListener('click', () => goTo(+dot.dataset.index)));
+})();
