@@ -1,3 +1,6 @@
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: hidden; max-width: 100%; }
+
 :root {
   --navy: #0D2F6E;
   --navy-light: #1A4494;
@@ -810,12 +813,15 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
-  nav { padding: 0 24px; }
+  .nav-inner { padding: 0 24px; }
   .nav-links { display: none; }
+  .nav-cta { display: none; }
 
   .hero { grid-template-columns: 1fr; min-height: 0; }
-  .hero-left { padding: 80px 24px 60px; }
-  .hero-right { padding: 60px 24px; }
+  .hero-left { padding: 0; align-items: flex-start; }
+  .hero-left-inner { max-width: 100%; padding: 80px 24px 60px; }
+  .hero-right { padding: 0; align-items: flex-start; }
+  .hero-right-inner { max-width: 100%; padding: 60px 24px; }
 
   section { padding: 72px 24px; }
   #case { padding: 72px 24px; }
@@ -824,7 +830,7 @@ footer {
   .phases { grid-template-columns: 1fr 1fr; }
   .services-grid { grid-template-columns: 1fr; }
   .case-inner { grid-template-columns: 1fr; gap: 48px; }
-  footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 24px; }
+  .footer-inner { flex-direction: column; gap: 16px; text-align: center; padding: 40px 24px; }
 }
 /* ── 貼到 index.css 最底部 ── */
 
