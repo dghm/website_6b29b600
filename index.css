@@ -550,7 +550,6 @@ section { padding: 100px 60px; }
 /* ── CASE CAROUSEL ── */
 .case-carousel-wrap {
   position: relative;
-  overflow: hidden;
 }
 
 .case-slide {
@@ -567,30 +566,35 @@ section { padding: 100px 60px; }
   to   { opacity: 1; transform: translateX(0); }
 }
 
-.case-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 32px 0 8px;
-}
-
 .case-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: 1px solid rgba(255,255,255,0.2);
   color: rgba(255,255,255,0.6);
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   font-size: 1.1rem;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
   line-height: 1;
+  z-index: 2;
 }
+
+#casePrev { left: 0; }
+#caseNext { right: 0; }
 
 .case-arrow:hover {
   border-color: var(--orange);
   color: var(--orange);
+}
+
+.case-controls {
+  display: flex;
+  justify-content: center;
+  padding: 28px 0 0;
 }
 
 .case-dots {
